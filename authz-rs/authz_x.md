@@ -1,6 +1,6 @@
 # Overview
 
-This project illustrates Permission-based authorization. A Permission states what behavior can be performed in an application but not who can perform it. Permissions are modeled such that a developer may choose an appropriate level of detail (granularity) that suits the authorization policy governing a software
+This project teaches Rust concepts using Permission-based authorization as its case study. A Permission states what behavior can be performed in an application but not who can perform it. Permissions are modeled such that a developer may choose an appropriate level of detail (granularity) that suits the authorization policy governing a software
 application. For more information about permission-based authorization, read the [Yosai documentation about authorization](https://yosaiproject.github.io/yosai/authorization).
 
 Permission-based authorization is made possible through interaction with a Permission data type.  A Permission type is evaluated and compared with another Permission type, determining whether one implies the other.  Authorization is granted when the Permission(s) assigned to a user imply the Permission(s) that are required to perform a
@@ -129,13 +129,60 @@ fn default_hash_part() -> HashSet<String> {
 ```
 The function ``default_hash_part`` returns a HashSet (of Strings).
 ["*"] is a single-string array, represented as ```[&str; 1]``.  It is converted *into* an iterator that has, as part of its api, a ``map`` function that executes a string conversion closure for each element of the iterator.  Once the mapping finishes, the collect function gathers all of the elements of the iterator together and stores the Strings into a HashSet<String>.
+
 ------------------------------------------------------------
+
 # Permission Implementation
+
+```rust
+impl<'a> Permission{
+    pub fn new(wildcard_perm: &str) -> Permission { ... }
+    fn part_from_str(s: Option<&str>) -> HashSet<String> {
+    fn init_parts(wildcard_perm: &str) -> (String, HashSet<String>, HashSet<String>) {
+    pub fn implies_from_str(&self, wildcard_permission: &str) -> bool {
+    pub fn implies_from_perm(&self, permission: &Permission) -> bool {
+}
+```
+``impl Permission`` begins the implementation of the Permission struct.  This particular implementation includes *associated functions* and *methods*.
+
+## Associated Functions
+    A function within a type implementation that doesn't accept ``self`` as a parameter is considered an *associated function*.  There are *three* associated functions implemented for Permission:
+
+    1. new(wildcard_perm: &str)
+    2. part_from_str(s: Option<&str>)
+    3. init_parts(wildcard_perm: &str)
+
+
+    The syntax for calling associated function is ``Permission::function(...)``.  For example:
+```rust
+    let p: Permission = Permission::new("domain:action1,action2");
+```
+
+## Methods
+    Methods are function that include a reference to ``self`` as the first argument.  There are *two* methods implemented for Permission:
+
+    1. implies_from_str(&self, wildcard_permission: &str)
+    2. implies_from_perm(&self, permission: &Permission)
+
+    The syntax for calling methods requires a Permission instance.  For example,
+    we call ``implies_from_perm`` from instance ``permission_1``:
+```rust
+    let permission_1: Permission = Permission::new("domain:action1,action2");
+    let permission_2: Permission = Permission::new("domain:action1");
+
+    permission1.implies_from_perm(permission2);
+```
+
+
+------------------------------------------------------------
 
 ```rust
 impl<'a> Permission
 ```
-This begins the implementation of the Permission struct.  This particular implementation includes *associated functions* and *methods*.  Notice how ``impl`` is proceeded by ``<'a>``.  This is the convention used to define a [lifetime parameter](https://doc.rust-lang.org/book/lifetimes.html), which we have named ``a``.  Rust forces programmers to take ownership of how long their objects will exist in memory when the compiler cannot infer object lifetime on its own.  We use the single apostrophe followed by the name of the lifetime when we scope our activities within a lifetime.
+------------------------------------------------------------
+
+
+Notice how ``impl`` is proceeded by ``<'a>``.  This is the convention used to define a [lifetime parameter](https://doc.rust-lang.org/book/lifetimes.html), which we have named ``a``.  Rust forces programmers to take ownership of how long their objects will exist in memory when the compiler cannot infer object lifetime on its own.  We use the single apostrophe followed by the name of the lifetime when we scope our activities within a lifetime.
 
 ------------------------------------------------------------
 
@@ -151,8 +198,6 @@ pub fn new(wildcard_perm: &str) -> Permission {
     perm
 }
 
-A function within a type implementation that doesn't accept ``self`` as a parameter is considered an *associated function*.  One example of such a function is the ``new`` constructor function within Permission.  The syntax for calling this function is ``Permission::new(...)``.
-
 
 
 ------------------------------------------------------------
@@ -163,20 +208,13 @@ Types sharing a lifetime
 <dowwie> is it simply that the fields of my poorly named struct Fields all share a lifetime
 <dowwie> qhris:  in other words, how do you describe this to someone who isn't familiar with lifetimes
 <qhris> dowwie: from what i understand, it's saying that you expect the references to be valid for the lifetime 'a
-<-- vignesh (vignesh@moz-fc269f.optusnet.com.au) has quit (Ping timeout: 121 seconds)
---> durka42 (durka42@moz-itei31.pa.comcast.net) has joined #rust-beginners
 <qhris> and in this case rust assign the 'a lifetime to the scope of your function, saying the Fields struct should live at least that long
---> acm2017 (Mibbit@moz-fd2ec2.mobility.psu.edu) has joined #rust-beginners
-<-- bread|laptop (bread@moz-99sjhj.sntcca.sbcglobal.net) has quit (Client exited)
 <qhris> and since the string literals are 'static, it works out fine
 <qhris> that's the way I understand it, but I might be wrong since I'm still pretty new to this as well.
 <zaphar_ps-M> specifically they must be valid for *at least* the lifetime 'a
---> bread|laptop (bread@moz-99sjhj.sntcca.sbcglobal.net) has joined #rust-beginners
 <zaphar_ps-M> but they are certainly free to be valid for longer.
 <zaphar_ps-M> and since 'static is longer all is good.
 <qhris> ^ yea
-<dowwie> aha
-<dowwie> thanks to you both
 <Arnavion> Specifically, the borrows must live atleast as long as 'a. That the struct also has a lifetime of 'a is because of the fact that it has fields with lifetime 'a
 <dowwie> Arnavion:  interesting, I'd have assumed it was the other way around (fields use 'a because Struct does)
 <zaphar_ps-M> well the struct because it has a reference to something with a lifetime 'a must also live at least as long as lifetime 'a
@@ -193,9 +231,7 @@ Types sharing a lifetime
 <zaphar_ps-M> sure.
 <Arnavion> It could have elision rules similar to how functions have them
 <zaphar_ps-M> the code to infer it has not been written.
-<Arnavion> Yes
 <zaphar_ps-M> therefore the compiler can not infer it.
-<dowwie> thanks everyone for giving this color
 the useful rule of thumb is a lifetime defines the minimum something must be valid for in relation to the other lifetimes but not the maximum.
 lifetimes: https://doc.rust-lang.org/beta/nomicon/lifetimes.html
 lifetime elision: https://doc.rust-lang.org/beta/nomicon/lifetime-elision.html
