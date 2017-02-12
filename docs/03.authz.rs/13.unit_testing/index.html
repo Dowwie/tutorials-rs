@@ -2,6 +2,9 @@
 <html lang="en" class="js csstransforms3d">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
+    <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="generator" content="Hugo 0.18.1" />
     <meta name="description" content="">
@@ -32,7 +35,7 @@
   <div id="header-wrapper">
     <div id="header">
       <a id="logo" href="http://www.daringordon.com/tutorials-rs">
-<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.svg" />
+<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.png" />
 </a>
 
     </div>
@@ -314,7 +317,7 @@ mod test {
 <p>In Rust, your unit tests exist within the module that they test, as a sub-module.  This approach is a departure from how unit testing is implemented in other programming languages &ndash; within modules separate from their test targets.  This practice is entirely safe and sound for the following two reasons:</p>
 
 <ol>
-<li><p>Unit tests are distinguished from the rest of a module  by decorating the section of unit testing code with a special <code>#[cfg(test)]</code> attribute and encapsulating all of the tests within a &ldquo;test&rdquo; sub-module: <code>mod test {..}</code>.  This attribute allows the compiler to ignore the section of code it decorates unless the compiler is explicitly instructed to run tests, such as by invoking &ldquo;cargo test&rdquo; from the command line.</p></li>
+<li><p>Unit tests are distinguished from the rest of a module  by decorating the section of unit testing code with a special <em>#[cfg(test)]</em> attribute and encapsulating all of the tests within a &ldquo;test&rdquo; sub-module: <em>mod test {..}</em>.  This attribute allows the compiler to ignore the section of code it decorates unless the compiler is explicitly instructed to run tests, such as by invoking &ldquo;cargo test&rdquo; from the command line.</p></li>
 
 <li><p>Unit tests test public <em>and</em> private objects.  Private objects are not accessible from outside the module that they exist but they are accessible, through imports, by descendant sub-modules (such as the test sub-module).</p></li>
 </ol>
@@ -325,7 +328,7 @@ mod test {
     }
 </code></pre>
 
-<p>The <code>#[test]</code> attribute is used to tell the compiler that the function it decorates is a test function and is to be run as a test unit.</p>
+<p>The <em>#[test]</em> attribute is used to tell the compiler that the function it decorates is a test function and is to be run as a test unit.</p>
 
 
       

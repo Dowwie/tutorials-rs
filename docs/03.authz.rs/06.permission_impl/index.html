@@ -2,6 +2,9 @@
 <html lang="en" class="js csstransforms3d">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
+    <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="generator" content="Hugo 0.18.1" />
     <meta name="description" content="">
@@ -32,7 +35,7 @@
   <div id="header-wrapper">
     <div id="header">
       <a id="logo" href="http://www.daringordon.com/tutorials-rs">
-<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.svg" />
+<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.png" />
 </a>
 
     </div>
@@ -308,33 +311,32 @@
 }
 </code></pre>
 
-<p><code>impl Permission</code> begins the implementation of the Permission struct.  This particular implementation includes <em>associated functions</em> and <em>methods</em>.</p>
+<p><em>impl Permission</em> begins the implementation of the Permission struct.  This particular implementation includes <em>associated functions</em> and <em>methods</em>.</p>
 
-<h2 id="associated-functions">Associated Functions</h2>
+<h2 id="center-associated-functions-center"><center>Associated Functions</center></h2>
 
-<pre><code>A function within a type implementation that doesn't accept ``self`` as a parameter is considered an *associated function*.  There are *three* associated functions implemented for Permission:
+<p>A function within a type implementation that doesn&rsquo;t accept <em>self</em> as a parameter is considered an <em>associated function</em>.  There are <em>three</em> associated functions implemented for Permission:</p>
 
-1. new(wildcard_perm: &amp;str)
-2. part_from_str(s: Option&lt;&amp;str&gt;)
-3. init_parts(wildcard_perm: &amp;str)
-
-
-The syntax for calling associated function is ``Permission::function(...)``.  For example:
+<pre><code class="language-rust">new(wildcard_perm: &amp;str)
+part_from_str(s: Option&lt;&amp;str&gt;)
+init_parts(wildcard_perm: &amp;str)
 </code></pre>
+
+<p>The syntax for calling associated function is <em>Permission::function(&hellip;)</em>.  For example:</p>
 
 <pre><code class="language-rust">    let p: Permission = Permission::new(&quot;domain:action1,action2&quot;);
 </code></pre>
 
-<h2 id="methods">Methods</h2>
+<h2 id="center-methods-center"><center>Methods</center></h2>
 
-<pre><code>Methods are function that include a reference to ``self`` as the first argument.  There are *two* methods implemented for Permission:
+<p>Methods are function that include a reference to <em>self</em> as the first argument.  There are <em>two</em> methods implemented for Permission:</p>
 
-1. implies_from_str(&amp;self, wildcard_permission: &amp;str)
-2. implies_from_perm(&amp;self, permission: &amp;Permission)
-
-The syntax for calling methods requires a Permission instance.  For example,
-we call ``implies_from_perm`` from instance ``permission_1``:
+<pre><code class="language-rust">implies_from_str(&amp;self, wildcard_permission: &amp;str)
+implies_from_perm(&amp;self, permission: &amp;Permission)
 </code></pre>
+
+<p>The syntax for calling methods requires a Permission instance.  For example,
+we call <em>implies_from_perm</em> from instance <em>permission_1</em>:</p>
 
 <pre><code class="language-rust">    let permission_1: Permission = Permission::new(&quot;domain:action1,action2&quot;);
     let permission_2: Permission = Permission::new(&quot;domain:action1&quot;);

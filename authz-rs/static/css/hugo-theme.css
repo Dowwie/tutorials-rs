@@ -10,7 +10,7 @@
 }
 
 #TableOfContents {
-    font-size: 13px !important;
+    font-size: 16px !important;
     max-height: 85vh;
     overflow: auto;
     padding: 15px !important;
@@ -34,7 +34,7 @@
 }
 
 body {
-    font-size: 14px !important;
+    font-size: 1rem !important;
     color: #323232 !important;
 }
 
@@ -172,7 +172,6 @@ h2 {
   font-size: 2.5rem;
   line-height: 100% !important;
   margin: 2.5rem 0 -1rem 0;
-  text-transform: capitalize;
 }
 
 h3 {

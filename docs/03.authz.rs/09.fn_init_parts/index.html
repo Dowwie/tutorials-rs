@@ -2,6 +2,9 @@
 <html lang="en" class="js csstransforms3d">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
+    <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="generator" content="Hugo 0.18.1" />
     <meta name="description" content="">
@@ -32,7 +35,7 @@
   <div id="header-wrapper">
     <div id="header">
       <a id="logo" href="http://www.daringordon.com/tutorials-rs">
-<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.svg" />
+<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.png" />
 </a>
 
     </div>
@@ -313,17 +316,17 @@
 }
 </code></pre>
 
-<p><code>init_parts</code> turns a string representation of a permission into the 3 fields
+<p><em>init_parts</em> turns a string representation of a permission into the 3 fields
 required by the Permission struct, using default values when necessary.</p>
 
 <h2 id="chaining-calls">Chaining Calls</h2>
 
-<p><code>init_parts</code> is provided a string primitive (&amp;str), <code>wildcard_perm</code>.</p>
+<p><em>init_parts</em> is provided a string primitive (&amp;str), <em>wildcard_perm</em>.</p>
 
 <pre><code class="language-rust">    let mut iter = wildcard_perm.split(PART_DELIMETER).map(str::trim);
 </code></pre>
 
-<p>This statement is a chain of calls.  The first call splits up the wildcard_perm string using the str::split method.  The string is split using the static global, <code>PART_DELIMETER</code>, as its delimiter.  The <code>split</code> method returns a <a href="https://doc.rust-lang.org/std/str/struct.Split.html">std::str::Split type</a>, which implements the Iterator trait (among others).  With this Split type, the map method is called.  <code>map</code> takes a closure, in this case str::trim, creates an std::iter::Map iterator, and then calls the closure on each element of the iterator, ultimately returning a mutable Map type.</p>
+<p>This statement is a chain of calls.  The first call splits up the wildcard_perm string using the str::split method.  The string is split using the static global, <em>PART_DELIMETER</em>, as its delimiter.  The <em>split</em> method returns a <a href="https://doc.rust-lang.org/std/str/struct.Split.html">std::str::Split type</a>, which implements the Iterator trait (among others).  With this Split type, the map method is called.  <em>map</em> takes a closure, in this case str::trim, creates an std::iter::Map iterator, and then calls the closure on each element of the iterator, ultimately returning a mutable Map type.</p>
 
 <p>Rather than chaining calls, you could perform the operations in steps.  The only disadvantage of this approach is that it&rsquo;s less concise.  The performance and memory consumption remains the same as with the chain:</p>
 
@@ -333,11 +336,11 @@ required by the Permission struct, using default values when necessary.</p>
 
 <p>Notice how the iterator isn&rsquo;t collected into a collection type, such as a Vector. In this case, collecting wasn&rsquo;t necessary and doing so would have created unnecessary overhead.</p>
 
-<p>We declar iter as a mutable value by using the &lsquo;mut&rsquo; prefix, as presented.  Later in the function are <code>iter.next()</code> calls.  <code>iter.next()</code> is a <em>mutable borrow</em> operation in that it updates the state of iter through a reference (borrow). To facilitate updates to iter from <code>iter.next()</code> calls, iter must be declared mutable.</p>
+<p>We declar iter as a mutable value by using the &lsquo;mut&rsquo; prefix, as presented.  Later in the function are <em>iter.next()</em> calls.  <em>iter.next()</em> is a <em>mutable borrow</em> operation in that it updates the state of iter through a reference (borrow). To facilitate updates to iter from <em>iter.next()</em> calls, iter must be declared mutable.</p>
 
 <h3 id="obtaining-domain-actions-and-targets">Obtaining Domain, Actions, and Targets</h3>
 
-<p>The rest of the function uses the elements of the iter Map to derive values that are bound to three local names:  domain, actions, and targets.  <code>init_parts</code> returns these three bindings in a tuple.</p>
+<p>The rest of the function uses the elements of the iter Map to derive values that are bound to three local names:  domain, actions, and targets.  <em>init_parts</em> returns these three bindings in a tuple.</p>
 
 <pre><code class="language-rust">    let domain = match iter.next() {
         Some(&quot;&quot;) | Some(&quot;*&quot;) | None =&gt; String::from(&quot;*&quot;),
@@ -347,13 +350,13 @@ required by the Permission struct, using default values when necessary.</p>
 
 <p>Domain is always the first element of the permission string.  We match on the next (first) element of the Map, iter.  If the element&rsquo;s value is empty, &ldquo;<em>&rdquo;, or doesn&rsquo;t exist, then match returns a String of &ldquo;</em>&rdquo;.  Otherwise, match returns a Stringified version of the element.</p>
 
-<p>Notice how a few values are wrapped by <code>Some</code> or our use of <code>None</code>?  Some and None are the supported values of an <a href="https://doc.rust-lang.org/std/option/enum.Option.html">Option enum</a>.  iter.next() returns an &ldquo;Optionized value&rdquo; and so we match on that.</p>
+<p>Notice how a few values are wrapped by <strong><em>Some</em></strong> or our use of <strong><em>None</em></strong>?  Some and None are the supported values of an <a href="https://doc.rust-lang.org/std/option/enum.Option.html">Option enum</a>.  iter.next() returns an &ldquo;Optionized value&rdquo; and so we match on that.</p>
 
 <pre><code class="language-rust">    let actions = Permission::part_from_str(iter.next());
     let targets = Permission::part_from_str(iter.next());
 </code></pre>
 
-<p>Finally, actions and targets are bound to values obtained from calls made to the function <code>part_from_str</code>, using the remaining two elements of iter as arguments.  <code>part_from_str</code> is discussed in the next section.</p>
+<p>Finally, actions and targets are bound to values obtained from calls made to the function <em>part_from_str</em>, using the remaining two elements of iter as arguments.  <em>part_from_str</em> is discussed in the next section.</p>
 
 
       

@@ -2,6 +2,9 @@
 <html lang="en" class="js csstransforms3d">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
+    <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="generator" content="Hugo 0.18.1" />
     <meta name="description" content="">
@@ -32,7 +35,7 @@
   <div id="header-wrapper">
     <div id="header">
       <a id="logo" href="http://www.daringordon.com/tutorials-rs">
-<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.svg" />
+<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.png" />
 </a>
 
     </div>
@@ -306,7 +309,7 @@
 
 <p>Notice how <em>impl</em> is proceeded by <strong><em>&lt;&lsquo;a&gt;</em></strong>.  This is the convention used to define a <a href="https://doc.rust-lang.org/book/lifetimes.html">lifetime parameter</a>, which we have named <em>a</em>.  Rust forces programmers to take ownership of how long their objects will exist in memory when the compiler cannot infer object lifetime on its own.  We use the single apostrophe followed by the name of the lifetime when we scope our activities within a lifetime.</p>
 
-<p>When a type reference is annotated with a lifetime parameter (in this case, &lsquo;a), we are declaring that the reference (borrow) is to remain valid (live) for <em>at least</em> the lifetime of &lsquo;a, if not longer.  In other words, we are declaring the minimum lifespan of a variable in memory.  The compiler&rsquo;s borrow checker keeps objects alive in memory for only as long as it needs to.  In the case of this project, <code>impl&lt;'a&gt; Permission</code> is <em>required</em> by the compiler because borrows within the implementation use lifetime &lsquo;a and since they exist within the scope of the implemntation, the implementation must also live for at least as long as it&rsquo;s constituents&rsquo; lifetime &lsquo;a.</p>
+<p>When a type reference is annotated with a lifetime parameter (in this case, &lsquo;a), we are declaring that the reference (borrow) is to remain valid (live) for <em>at least</em> the lifetime of &lsquo;a, if not longer.  In other words, we are declaring the minimum lifespan of a variable in memory.  The compiler&rsquo;s borrow checker keeps objects alive in memory for only as long as it needs to.  In the case of this project, <em>impl&lt;&lsquo;a&gt; Permission</em> is <em>required</em> by the compiler because borrows within the implementation use lifetime &lsquo;a and since they exist within the scope of the implemntation, the implementation must also live for at least as long as it&rsquo;s constituents&rsquo; lifetime &lsquo;a.</p>
 
 <p>Everything in Rust has a lifetime.  The reason that you don&rsquo;t see them everywhere is that they are often inferred by the compiler.  However, <em>borrows</em> required explicit annotation of lifetimes because the compiler cannot infer an appropriate lifetime for them.</p>
 

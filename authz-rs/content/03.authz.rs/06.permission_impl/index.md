@@ -20,29 +20,35 @@ impl<'a> Permission{
     pub fn implies_from_perm(&self, permission: &Permission) -> bool {
 }
 ```
-``impl Permission`` begins the implementation of the Permission struct.  This particular implementation includes *associated functions* and *methods*.
+*impl Permission* begins the implementation of the Permission struct.  This particular implementation includes *associated functions* and *methods*.
 
-## Associated Functions
-    A function within a type implementation that doesn't accept ``self`` as a parameter is considered an *associated function*.  There are *three* associated functions implemented for Permission:
+## <center>Associated Functions</center>
 
-    1. new(wildcard_perm: &str)
-    2. part_from_str(s: Option<&str>)
-    3. init_parts(wildcard_perm: &str)
+A function within a type implementation that doesn't accept *self* as a parameter is considered an *associated function*.  There are *three* associated functions implemented for Permission:
 
+```rust
+new(wildcard_perm: &str)
+part_from_str(s: Option<&str>)
+init_parts(wildcard_perm: &str)
+```
 
-    The syntax for calling associated function is ``Permission::function(...)``.  For example:
+The syntax for calling associated function is *Permission::function(...)*.  For example:
 ```rust
     let p: Permission = Permission::new("domain:action1,action2");
 ```
 
-## Methods
-    Methods are function that include a reference to ``self`` as the first argument.  There are *two* methods implemented for Permission:
+## <center>Methods</center>
 
-    1. implies_from_str(&self, wildcard_permission: &str)
-    2. implies_from_perm(&self, permission: &Permission)
+Methods are function that include a reference to *self* as the first argument.  There are *two* methods implemented for Permission:
 
-    The syntax for calling methods requires a Permission instance.  For example,
-    we call ``implies_from_perm`` from instance ``permission_1``:
+```rust
+implies_from_str(&self, wildcard_permission: &str)
+implies_from_perm(&self, permission: &Permission)
+```
+
+The syntax for calling methods requires a Permission instance.  For example,
+we call *implies_from_perm* from instance *permission_1*:
+
 ```rust
     let permission_1: Permission = Permission::new("domain:action1,action2");
     let permission_2: Permission = Permission::new("domain:action1");

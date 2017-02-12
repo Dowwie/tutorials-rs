@@ -1,24 +1,24 @@
 /* background behind the logo*/
 #header {
-    background: #fff;
-    border-color: #fff;
+    background: #5e5e5e;
+    border-color: #5e5e5e;
 }
 #header-wrapper {
-    background: #fff;
-    color: #fff;
+    background: #5e5e5e;
+    color: #5e5e5e;
     text-align: center;
-    border-bottom: 6px solid #494949;
+    border-bottom: 6px solid #5e5e5e;
     padding: 1rem;
 }
 
 /* Background color of the menu */
 #sidebar {
-  background-color: #494949;
+  background-color: #5e5e5e;
 }
 
 /* Background color of the menu, when clicked */
 #sidebar ul.topics > li.parent, #sidebar ul.topics > li.active {
-  background-color:  #303030;
+  background-color:  #5e5e5e;
 }
 
 /* Color of all links, including arrows to get to previous and next pages */

@@ -397,7 +397,7 @@ static SUBPART_DELIMETER: &amp;amp;&#39;static str = &amp;quot;,&amp;quot;;
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Suppose we were to model a permission that describes a bank account withdrawal from a particular bank account: &lt;code&gt;bankaccount:withdrawal:account12345&lt;/code&gt;.  In this example, our Permission&amp;rsquo;s domain is &lt;code&gt;bankaccount&lt;/code&gt; , actions is a HashSet (of Strings) containing the &lt;code&gt;withdraw&lt;/code&gt; String, and targets is a HashSet (of Strings) containing the &lt;code&gt;account12345&lt;/code&gt; String.&lt;/p&gt;
+&lt;p&gt;Suppose we were to model a permission that describes a bank account withdrawal from a particular bank account: &lt;em&gt;bankaccount:withdrawal:account12345&lt;/em&gt;.  In this example, our Permission&amp;rsquo;s domain is &lt;em&gt;bankaccount&lt;/em&gt; , actions is a HashSet (of Strings) containing the &lt;em&gt;withdraw&lt;/em&gt; String, and targets is a HashSet (of Strings) containing the &lt;em&gt;account12345&lt;/em&gt; String.&lt;/p&gt;
 
 &lt;p&gt;This struct definition would have sufficed had we not needed to be able to (de)serialize instances of a Permission.  However, since Permissions are serializable, we must update the struct definition accordingly.&lt;/p&gt;
 </description>
@@ -427,10 +427,9 @@ pub struct Permission {
     #[serde(default = &amp;quot;default_hash_part&amp;quot;)]
     targets: HashSet&amp;lt;String&amp;gt;
 }
-
-## Attributes
-
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;center-attributes-center&#34;&gt;&lt;center&gt;Attributes&lt;/center&gt;&lt;/h2&gt;
 
 &lt;p&gt;Notice how Permission and its three fields are each decorated by a line beginning with &amp;ldquo;#[&amp;hellip;]&amp;ldquo;.  This hash-bracket syntax denotes the use of Rust &lt;a href=&#34;https://doc.rust-lang.org/book/attributes.html&#34;&gt;Attributes&lt;/a&gt;. An Attribute is used in a declarative style of programming, decorating its target below.&lt;/p&gt;
 
@@ -442,7 +441,7 @@ pub struct Permission {
 
 &lt;p&gt;The &lt;em&gt;derive&lt;/em&gt; Attribute automatically generates traits for data structures. This particular declaration derives 4 traits for Permission: Debug, PartialEq, Serialize, and Deserialize.&lt;/p&gt;
 
-&lt;h3 id=&#34;custom-attributes&#34;&gt;Custom Attributes&lt;/h3&gt;
+&lt;h3 id=&#34;center-custom-attributes-center&#34;&gt;&lt;center&gt;Custom Attributes&lt;/center&gt;&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;#[serde(default = &amp;quot;default_part&amp;quot;)]
 domain: String,
@@ -454,9 +453,9 @@ actions: HashSet&amp;lt;String&amp;gt;,
 targets: HashSet&amp;lt;String&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;These are customized Attributes in that they are not sourced from Rust&amp;rsquo;s standard library of Attributes. Rust supports customized Attributes only under one condition:  that the custom Attribute(s) is for &amp;ldquo;something&amp;rdquo; being derived.  In this example, our custom &lt;code&gt;#[serde(...)]&lt;/code&gt; Attribute is allowed by the Rust compiler because the Attribute is decorating a field that is part of a struct that is having a Deserialize trait derived for it.  The Deserialize trait makes use of the &lt;code&gt;#[serde(...)]&lt;/code&gt; attribute when it needs to obtain a default value for the decorated field.  In this example, we are declaring a function to call for a default field value.  For instance, the &amp;ldquo;default_hash_part&amp;rdquo; function is called by serde during deserialization when no value is available for the &lt;code&gt;actions&lt;/code&gt; field.&lt;/p&gt;
+&lt;p&gt;These are customized Attributes in that they are not sourced from Rust&amp;rsquo;s standard library of Attributes. Rust supports customized Attributes only under one condition:  that the custom Attribute(s) is for &amp;ldquo;something&amp;rdquo; being derived.  In this example, our custom &lt;em&gt;#[serde(&amp;hellip;)]&lt;/em&gt; Attribute is allowed by the Rust compiler because the Attribute is decorating a field that is part of a struct that is having a Deserialize trait derived for it.  The Deserialize trait makes use of the &lt;em&gt;#[serde(&amp;hellip;)]&lt;/em&gt; attribute when it needs to obtain a default value for the decorated field.  In this example, we are declaring a function to call for a default field value.  For instance, the &amp;ldquo;default_hash_part&amp;rdquo; function is called by serde during deserialization when no value is available for the &lt;em&gt;actions&lt;/em&gt; field.&lt;/p&gt;
 
-&lt;h2 id=&#34;default-value-functions-for-serde-deserialization&#34;&gt;Default-Value Functions for Serde Deserialization&lt;/h2&gt;
+&lt;h2 id=&#34;center-default-value-functions-for-serde-deserialization-center&#34;&gt;&lt;center&gt;Default-Value Functions for Serde Deserialization&lt;/center&gt;&lt;/h2&gt;
 
 &lt;p&gt;Serde calls the following functions to obtain default values for fields unpresented in serialized messages.&lt;/p&gt;
 
@@ -465,15 +464,15 @@ targets: HashSet&amp;lt;String&amp;gt;
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The function &lt;code&gt;default_part&lt;/code&gt; is a very basic function that converts a string primitive to a String and returns the String.  There are &lt;a href=&#34;http://rustbyexample.com/std/str.html&#34;&gt;two types of strings&lt;/a&gt; in Rust:  &lt;code&gt;&amp;amp;str&lt;/code&gt; and &lt;code&gt;String&lt;/code&gt;.  &lt;code&gt;&amp;quot;*&amp;quot;&lt;/code&gt; is a string primitive, represented in Rust as &lt;code&gt;&amp;amp;str&lt;/code&gt;.  We convert this primitive to a String type by calling the to_string() method of the str primitive.&lt;/p&gt;
+&lt;p&gt;The function &lt;em&gt;default_part&lt;/em&gt; is a very basic function that converts a string primitive to a String and returns the String.  There are &lt;a href=&#34;http://rustbyexample.com/std/str.html&#34;&gt;two types of strings&lt;/a&gt; in Rust:  &lt;strong&gt;&lt;em&gt;&amp;amp;str&lt;/em&gt;&lt;/strong&gt; and &lt;strong&gt;&lt;em&gt;String&lt;/em&gt;&lt;/strong&gt;.  &lt;em&gt;&amp;ldquo;&lt;/em&gt;&amp;ldquo;* is a string primitive, represented in Rust as &lt;em&gt;&amp;amp;str&lt;/em&gt;.  We convert this primitive to a String type by calling the to_string() method of the str primitive.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;fn default_hash_part() -&amp;gt; HashSet&amp;lt;String&amp;gt; {
     [&amp;quot;*&amp;quot;].into_iter().map(|s| s.to_string()).collect()
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The function &lt;code&gt;default_hash_part&lt;/code&gt; returns a HashSet (of Strings).
-[&amp;rdquo;*&amp;ldquo;] is a single-string array, represented as `&lt;code&gt;[&amp;amp;str; 1]&lt;/code&gt;.  It is converted &lt;em&gt;into&lt;/em&gt; an iterator that has, as part of its api, a &lt;code&gt;map&lt;/code&gt; function that executes a string conversion closure for each element of the iterator.  Once the mapping finishes, the collect function gathers all of the elements of the iterator together and stores the Strings into a HashSet&lt;String&gt;.&lt;/p&gt;
+&lt;p&gt;The function &lt;em&gt;default_hash_part&lt;/em&gt; returns a HashSet (of Strings).
+[&amp;rdquo;*&amp;ldquo;] is a single-string array, represented as &lt;strong&gt;&lt;em&gt;[&amp;str; 1]&lt;/em&gt;&lt;/strong&gt;.  It is converted &lt;em&gt;into&lt;/em&gt; an iterator that has, as part of its api, a &lt;em&gt;map&lt;/em&gt; function that executes a string conversion closure for each element of the iterator.  Once the mapping finishes, the collect function gathers all of the elements of the iterator together and stores the Strings into a HashSet&lt;String&gt;.&lt;/p&gt;
 </description>
     </item>
     
@@ -498,33 +497,32 @@ targets: HashSet&amp;lt;String&amp;gt;
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;code&gt;impl Permission&lt;/code&gt; begins the implementation of the Permission struct.  This particular implementation includes &lt;em&gt;associated functions&lt;/em&gt; and &lt;em&gt;methods&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;impl Permission&lt;/em&gt; begins the implementation of the Permission struct.  This particular implementation includes &lt;em&gt;associated functions&lt;/em&gt; and &lt;em&gt;methods&lt;/em&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;associated-functions&#34;&gt;Associated Functions&lt;/h2&gt;
+&lt;h2 id=&#34;center-associated-functions-center&#34;&gt;&lt;center&gt;Associated Functions&lt;/center&gt;&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;A function within a type implementation that doesn&#39;t accept ``self`` as a parameter is considered an *associated function*.  There are *three* associated functions implemented for Permission:
+&lt;p&gt;A function within a type implementation that doesn&amp;rsquo;t accept &lt;em&gt;self&lt;/em&gt; as a parameter is considered an &lt;em&gt;associated function&lt;/em&gt;.  There are &lt;em&gt;three&lt;/em&gt; associated functions implemented for Permission:&lt;/p&gt;
 
-1. new(wildcard_perm: &amp;amp;str)
-2. part_from_str(s: Option&amp;lt;&amp;amp;str&amp;gt;)
-3. init_parts(wildcard_perm: &amp;amp;str)
-
-
-The syntax for calling associated function is ``Permission::function(...)``.  For example:
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;new(wildcard_perm: &amp;amp;str)
+part_from_str(s: Option&amp;lt;&amp;amp;str&amp;gt;)
+init_parts(wildcard_perm: &amp;amp;str)
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The syntax for calling associated function is &lt;em&gt;Permission::function(&amp;hellip;)&lt;/em&gt;.  For example:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;    let p: Permission = Permission::new(&amp;quot;domain:action1,action2&amp;quot;);
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;methods&#34;&gt;Methods&lt;/h2&gt;
+&lt;h2 id=&#34;center-methods-center&#34;&gt;&lt;center&gt;Methods&lt;/center&gt;&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;Methods are function that include a reference to ``self`` as the first argument.  There are *two* methods implemented for Permission:
+&lt;p&gt;Methods are function that include a reference to &lt;em&gt;self&lt;/em&gt; as the first argument.  There are &lt;em&gt;two&lt;/em&gt; methods implemented for Permission:&lt;/p&gt;
 
-1. implies_from_str(&amp;amp;self, wildcard_permission: &amp;amp;str)
-2. implies_from_perm(&amp;amp;self, permission: &amp;amp;Permission)
-
-The syntax for calling methods requires a Permission instance.  For example,
-we call ``implies_from_perm`` from instance ``permission_1``:
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;implies_from_str(&amp;amp;self, wildcard_permission: &amp;amp;str)
+implies_from_perm(&amp;amp;self, permission: &amp;amp;Permission)
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The syntax for calling methods requires a Permission instance.  For example,
+we call &lt;em&gt;implies_from_perm&lt;/em&gt; from instance &lt;em&gt;permission_1&lt;/em&gt;:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;    let permission_1: Permission = Permission::new(&amp;quot;domain:action1,action2&amp;quot;);
     let permission_2: Permission = Permission::new(&amp;quot;domain:action1&amp;quot;);
@@ -553,7 +551,7 @@ we call ``implies_from_perm`` from instance ``permission_1``:
 
 &lt;p&gt;Notice how &lt;em&gt;impl&lt;/em&gt; is proceeded by &lt;strong&gt;&lt;em&gt;&amp;lt;&amp;lsquo;a&amp;gt;&lt;/em&gt;&lt;/strong&gt;.  This is the convention used to define a &lt;a href=&#34;https://doc.rust-lang.org/book/lifetimes.html&#34;&gt;lifetime parameter&lt;/a&gt;, which we have named &lt;em&gt;a&lt;/em&gt;.  Rust forces programmers to take ownership of how long their objects will exist in memory when the compiler cannot infer object lifetime on its own.  We use the single apostrophe followed by the name of the lifetime when we scope our activities within a lifetime.&lt;/p&gt;
 
-&lt;p&gt;When a type reference is annotated with a lifetime parameter (in this case, &amp;lsquo;a), we are declaring that the reference (borrow) is to remain valid (live) for &lt;em&gt;at least&lt;/em&gt; the lifetime of &amp;lsquo;a, if not longer.  In other words, we are declaring the minimum lifespan of a variable in memory.  The compiler&amp;rsquo;s borrow checker keeps objects alive in memory for only as long as it needs to.  In the case of this project, &lt;code&gt;impl&amp;lt;&#39;a&amp;gt; Permission&lt;/code&gt; is &lt;em&gt;required&lt;/em&gt; by the compiler because borrows within the implementation use lifetime &amp;lsquo;a and since they exist within the scope of the implemntation, the implementation must also live for at least as long as it&amp;rsquo;s constituents&amp;rsquo; lifetime &amp;lsquo;a.&lt;/p&gt;
+&lt;p&gt;When a type reference is annotated with a lifetime parameter (in this case, &amp;lsquo;a), we are declaring that the reference (borrow) is to remain valid (live) for &lt;em&gt;at least&lt;/em&gt; the lifetime of &amp;lsquo;a, if not longer.  In other words, we are declaring the minimum lifespan of a variable in memory.  The compiler&amp;rsquo;s borrow checker keeps objects alive in memory for only as long as it needs to.  In the case of this project, &lt;em&gt;impl&amp;lt;&amp;lsquo;a&amp;gt; Permission&lt;/em&gt; is &lt;em&gt;required&lt;/em&gt; by the compiler because borrows within the implementation use lifetime &amp;lsquo;a and since they exist within the scope of the implemntation, the implementation must also live for at least as long as it&amp;rsquo;s constituents&amp;rsquo; lifetime &amp;lsquo;a.&lt;/p&gt;
 
 &lt;p&gt;Everything in Rust has a lifetime.  The reason that you don&amp;rsquo;t see them everywhere is that they are often inferred by the compiler.  However, &lt;em&gt;borrows&lt;/em&gt; required explicit annotation of lifetimes because the compiler cannot infer an appropriate lifetime for them.&lt;/p&gt;
 </description>
@@ -582,7 +580,7 @@ we call ``implies_from_perm`` from instance ``permission_1``:
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;code&gt;new&lt;/code&gt; is an associated function that implements a constructor pattern.  The first assignment illustrates what is known as a &amp;ldquo;destructuring let&amp;rdquo;.  Here, the call to &lt;code&gt;init_parts&lt;/code&gt; returns a 3-element &lt;a href=&#34;https://doc.rust-lang.org/book/primitive-types.html#tuples&#34;&gt;tuple&lt;/a&gt; that is unpacked and each of its three elements is bound to a corresponding name:  domain, actions, and targets.  These three variables are then used as arguments for a new Permission instance, which is returned in the last line.  The keyword &amp;ldquo;return&amp;rdquo; is implied and unnecessary in Rust if the last line of a function isn&amp;rsquo;t terminated with a semicolon.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;new&lt;/em&gt; is an associated function that implements a constructor pattern.  The first assignment illustrates what is known as a &amp;ldquo;destructuring let&amp;rdquo;.  Here, the call to &lt;em&gt;init_parts&lt;/em&gt; returns a 3-element &lt;a href=&#34;https://doc.rust-lang.org/book/primitive-types.html#tuples&#34;&gt;tuple&lt;/a&gt; that is unpacked and each of its three elements is bound to a corresponding name:  domain, actions, and targets.  These three variables are then used as arguments for a new Permission instance, which is returned in the last line.  The keyword &amp;ldquo;return&amp;rdquo; is implied and unnecessary in Rust if the last line of a function isn&amp;rsquo;t terminated with a semicolon.&lt;/p&gt;
 </description>
     </item>
     
@@ -612,17 +610,17 @@ we call ``implies_from_perm`` from instance ``permission_1``:
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;code&gt;init_parts&lt;/code&gt; turns a string representation of a permission into the 3 fields
+&lt;p&gt;&lt;em&gt;init_parts&lt;/em&gt; turns a string representation of a permission into the 3 fields
 required by the Permission struct, using default values when necessary.&lt;/p&gt;
 
 &lt;h2 id=&#34;chaining-calls&#34;&gt;Chaining Calls&lt;/h2&gt;
 
-&lt;p&gt;&lt;code&gt;init_parts&lt;/code&gt; is provided a string primitive (&amp;amp;str), &lt;code&gt;wildcard_perm&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;init_parts&lt;/em&gt; is provided a string primitive (&amp;amp;str), &lt;em&gt;wildcard_perm&lt;/em&gt;.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;    let mut iter = wildcard_perm.split(PART_DELIMETER).map(str::trim);
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;This statement is a chain of calls.  The first call splits up the wildcard_perm string using the str::split method.  The string is split using the static global, &lt;code&gt;PART_DELIMETER&lt;/code&gt;, as its delimiter.  The &lt;code&gt;split&lt;/code&gt; method returns a &lt;a href=&#34;https://doc.rust-lang.org/std/str/struct.Split.html&#34;&gt;std::str::Split type&lt;/a&gt;, which implements the Iterator trait (among others).  With this Split type, the map method is called.  &lt;code&gt;map&lt;/code&gt; takes a closure, in this case str::trim, creates an std::iter::Map iterator, and then calls the closure on each element of the iterator, ultimately returning a mutable Map type.&lt;/p&gt;
+&lt;p&gt;This statement is a chain of calls.  The first call splits up the wildcard_perm string using the str::split method.  The string is split using the static global, &lt;em&gt;PART_DELIMETER&lt;/em&gt;, as its delimiter.  The &lt;em&gt;split&lt;/em&gt; method returns a &lt;a href=&#34;https://doc.rust-lang.org/std/str/struct.Split.html&#34;&gt;std::str::Split type&lt;/a&gt;, which implements the Iterator trait (among others).  With this Split type, the map method is called.  &lt;em&gt;map&lt;/em&gt; takes a closure, in this case str::trim, creates an std::iter::Map iterator, and then calls the closure on each element of the iterator, ultimately returning a mutable Map type.&lt;/p&gt;
 
 &lt;p&gt;Rather than chaining calls, you could perform the operations in steps.  The only disadvantage of this approach is that it&amp;rsquo;s less concise.  The performance and memory consumption remains the same as with the chain:&lt;/p&gt;
 
@@ -632,11 +630,11 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
 
 &lt;p&gt;Notice how the iterator isn&amp;rsquo;t collected into a collection type, such as a Vector. In this case, collecting wasn&amp;rsquo;t necessary and doing so would have created unnecessary overhead.&lt;/p&gt;
 
-&lt;p&gt;We declar iter as a mutable value by using the &amp;lsquo;mut&amp;rsquo; prefix, as presented.  Later in the function are &lt;code&gt;iter.next()&lt;/code&gt; calls.  &lt;code&gt;iter.next()&lt;/code&gt; is a &lt;em&gt;mutable borrow&lt;/em&gt; operation in that it updates the state of iter through a reference (borrow). To facilitate updates to iter from &lt;code&gt;iter.next()&lt;/code&gt; calls, iter must be declared mutable.&lt;/p&gt;
+&lt;p&gt;We declar iter as a mutable value by using the &amp;lsquo;mut&amp;rsquo; prefix, as presented.  Later in the function are &lt;em&gt;iter.next()&lt;/em&gt; calls.  &lt;em&gt;iter.next()&lt;/em&gt; is a &lt;em&gt;mutable borrow&lt;/em&gt; operation in that it updates the state of iter through a reference (borrow). To facilitate updates to iter from &lt;em&gt;iter.next()&lt;/em&gt; calls, iter must be declared mutable.&lt;/p&gt;
 
 &lt;h3 id=&#34;obtaining-domain-actions-and-targets&#34;&gt;Obtaining Domain, Actions, and Targets&lt;/h3&gt;
 
-&lt;p&gt;The rest of the function uses the elements of the iter Map to derive values that are bound to three local names:  domain, actions, and targets.  &lt;code&gt;init_parts&lt;/code&gt; returns these three bindings in a tuple.&lt;/p&gt;
+&lt;p&gt;The rest of the function uses the elements of the iter Map to derive values that are bound to three local names:  domain, actions, and targets.  &lt;em&gt;init_parts&lt;/em&gt; returns these three bindings in a tuple.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;    let domain = match iter.next() {
         Some(&amp;quot;&amp;quot;) | Some(&amp;quot;*&amp;quot;) | None =&amp;gt; String::from(&amp;quot;*&amp;quot;),
@@ -646,13 +644,13 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
 
 &lt;p&gt;Domain is always the first element of the permission string.  We match on the next (first) element of the Map, iter.  If the element&amp;rsquo;s value is empty, &amp;ldquo;&lt;em&gt;&amp;rdquo;, or doesn&amp;rsquo;t exist, then match returns a String of &amp;ldquo;&lt;/em&gt;&amp;rdquo;.  Otherwise, match returns a Stringified version of the element.&lt;/p&gt;
 
-&lt;p&gt;Notice how a few values are wrapped by &lt;code&gt;Some&lt;/code&gt; or our use of &lt;code&gt;None&lt;/code&gt;?  Some and None are the supported values of an &lt;a href=&#34;https://doc.rust-lang.org/std/option/enum.Option.html&#34;&gt;Option enum&lt;/a&gt;.  iter.next() returns an &amp;ldquo;Optionized value&amp;rdquo; and so we match on that.&lt;/p&gt;
+&lt;p&gt;Notice how a few values are wrapped by &lt;strong&gt;&lt;em&gt;Some&lt;/em&gt;&lt;/strong&gt; or our use of &lt;strong&gt;&lt;em&gt;None&lt;/em&gt;&lt;/strong&gt;?  Some and None are the supported values of an &lt;a href=&#34;https://doc.rust-lang.org/std/option/enum.Option.html&#34;&gt;Option enum&lt;/a&gt;.  iter.next() returns an &amp;ldquo;Optionized value&amp;rdquo; and so we match on that.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;    let actions = Permission::part_from_str(iter.next());
     let targets = Permission::part_from_str(iter.next());
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Finally, actions and targets are bound to values obtained from calls made to the function &lt;code&gt;part_from_str&lt;/code&gt;, using the remaining two elements of iter as arguments.  &lt;code&gt;part_from_str&lt;/code&gt; is discussed in the next section.&lt;/p&gt;
+&lt;p&gt;Finally, actions and targets are bound to values obtained from calls made to the function &lt;em&gt;part_from_str&lt;/em&gt;, using the remaining two elements of iter as arguments.  &lt;em&gt;part_from_str&lt;/em&gt; is discussed in the next section.&lt;/p&gt;
 </description>
     </item>
     
@@ -685,11 +683,11 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;code&gt;part_from_str&lt;/code&gt; is used to break a string into pieces and return those pieces in a HashSet, using a default wildcard asterisk when necessary.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;part_from_str&lt;/em&gt; is used to break a string into pieces and return those pieces in a HashSet, using a default wildcard asterisk when necessary.&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;part_from_str&lt;/code&gt; splits up a permission, using a SUBPART_DELIMETER, and returns the split parts as values of a HashSet.  A HashSet type is used to eliminate possible duplicate values and to take advantage of set operations during comparisons.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;part_from_str&lt;/em&gt; splits up a permission, using a SUBPART_DELIMETER, and returns the split parts as values of a HashSet.  A HashSet type is used to eliminate possible duplicate values and to take advantage of set operations during comparisons.&lt;/p&gt;
 
-&lt;p&gt;Argument s is an Option, so we match on Some value or None.&lt;/p&gt;
+&lt;p&gt;Argument &lt;strong&gt;s&lt;/strong&gt; is an Option, so we match on Some value or None.&lt;/p&gt;
 </description>
     </item>
     
@@ -720,9 +718,9 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;code&gt;is_permitted_from_str&lt;/code&gt; determines whether a required permission, expressed as a borrowed string, is satisfied by permissions assigned to a user, expressed as an iterator of borrowed strings.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;is_permitted_from_str&lt;/em&gt; determines whether a required permission, expressed as a borrowed string, is satisfied by permissions assigned to a user, expressed as an iterator of borrowed strings.&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;is_permitted_from_str&lt;/code&gt; is a function that is generic over one type, I.  The where clause constrains (bounds) what type is accepted for I:  a type that implements IntoIterator and whose items are strings.  This approach is used so that the function that calls &lt;code&gt;is_permitted_from_str&lt;/code&gt; doesn&amp;rsquo;t have to convert its dataset into a collection prior to passing it.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;is_permitted_from_str&lt;/em&gt; is a function that is generic over one type, I.  The where clause constrains (bounds) what type is accepted for I:  a type that implements IntoIterator and whose items are strings.  This approach is used so that the function that calls &lt;em&gt;is_permitted_from_str&lt;/em&gt; doesn&amp;rsquo;t have to convert its dataset into a collection prior to passing it.&lt;/p&gt;
 </description>
     </item>
     
@@ -744,11 +742,11 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;code&gt;perms_from_buffer&lt;/code&gt; de-serializes JSON to a Vector of Permissions. It borrows serialized_perms (a slice of bytes) and returns a Result that is either a &lt;a href=&#34;https://doc.rust-lang.org/book/vectors.html&#34;&gt;Vector&lt;/a&gt; of Permissions or a Boxed Error.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;perms_from_buffer&lt;/em&gt; de-serializes JSON to a Vector of Permissions. It borrows serialized_perms (a slice of bytes) and returns a Result that is either a &lt;a href=&#34;https://doc.rust-lang.org/book/vectors.html&#34;&gt;Vector&lt;/a&gt; of Permissions or a Boxed Error.&lt;/p&gt;
 
 &lt;h2 id=&#34;byte-slices&#34;&gt;Byte Slices&lt;/h2&gt;
 
-&lt;p&gt;Notice how this function borrows &lt;code&gt;serialized_perms&lt;/code&gt;.  &lt;code&gt;serialized_perms&lt;/code&gt; is a slice of bytes whose type is expressed in Rust as &lt;code&gt;&amp;amp;[u8]&lt;/code&gt;. &lt;code&gt;serialized_perms&lt;/code&gt; is in the form of a byte slice, rather than a string, because the JSON is stored in a particular datastore as bytes and consequently received from a datastore as bytes. No prior string conversion is necessary prior to handing the JSON over to the &lt;code&gt;serde_json&lt;/code&gt; library for de-serialization because &lt;code&gt;serde_json&lt;/code&gt; offers a &lt;code&gt;from_slice&lt;/code&gt; function that can read byte slices.&lt;/p&gt;
+&lt;p&gt;Notice how this function borrows &lt;em&gt;serialized_perms&lt;/em&gt;.  &lt;em&gt;serialized_perms&lt;/em&gt; is a slice of bytes whose type is expressed in Rust as &lt;strong&gt;&amp;amp;[u8]&lt;/strong&gt;. &lt;em&gt;serialized_perms&lt;/em&gt; is in the form of a byte slice, rather than a string, because the JSON is stored in a particular datastore as bytes and consequently received from a datastore as bytes. No prior string conversion is necessary prior to handing the JSON over to the &lt;em&gt;serde_json&lt;/em&gt; library for de-serialization because &lt;em&gt;serde_json&lt;/em&gt; offers a &lt;em&gt;from_slice&lt;/em&gt; function that can read byte slices.&lt;/p&gt;
 
 &lt;h2 id=&#34;error-handling&#34;&gt;Error Handling&lt;/h2&gt;
 
@@ -757,22 +755,22 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;let result = try!(serde_json::from_slice(serialized_perms));
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;code&gt;try!&lt;/code&gt; is a helper &lt;a href=&#34;https://doc.rust-lang.org/beta/book/macros.html&#34;&gt;macro&lt;/a&gt; that reduces boilerplate code involved with calling a procedure and handling any errors that may arise from the call.  In the event that the code executed within a &lt;code&gt;try!&lt;/code&gt; block raises an error, &lt;code&gt;try!&lt;/code&gt; will either propagate &lt;em&gt;that&lt;/em&gt; error or an error of your liking up the call stack without resuming execution of any other code within &lt;code&gt;perms_from_buffer&lt;/code&gt;.  Because of the early return, &lt;code&gt;try!&lt;/code&gt; can only be used in functions that return a Result type.  We address this requirement with our return type:  &lt;code&gt;Result&amp;lt;Vec&amp;lt;Permission&amp;gt;, Box&amp;lt;Error&amp;gt;&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;try!&lt;/em&gt; is a helper &lt;a href=&#34;https://doc.rust-lang.org/beta/book/macros.html&#34;&gt;macro&lt;/a&gt; that reduces boilerplate code involved with calling a procedure and handling any errors that may arise from the call.  In the event that the code executed within a &lt;em&gt;try!&lt;/em&gt; block raises an error, &lt;em&gt;try!&lt;/em&gt; will either propagate &lt;em&gt;that&lt;/em&gt; error or an error of your liking up the call stack without resuming execution of any other code within &lt;em&gt;perms_from_buffer&lt;/em&gt;.  Because of the early return, &lt;em&gt;try!&lt;/em&gt; can only be used in functions that return a Result type.  We address this requirement with our return type:  &lt;em&gt;Result&lt;Vec&lt;Permission&gt;, Box&lt;Error&gt;&amp;gt;&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;In the event that &lt;code&gt;let result = serde_json::from_slice(serialized_perms)&lt;/code&gt; doesn&amp;rsquo;t raise an error, the &lt;code&gt;result&lt;/code&gt; &lt;em&gt;pattern&lt;/em&gt; is bound to the value returned by the function call: a Vector of Permissions.&lt;/p&gt;
+&lt;p&gt;In the event that &lt;em&gt;let result = serde_json::from_slice(serialized_perms)&lt;/em&gt; doesn&amp;rsquo;t raise an error, the &lt;em&gt;pattern&lt;/em&gt;, named &amp;lsquo;result&amp;rsquo;, is bound to the value returned by the function call: a Vector of Permissions.&lt;/p&gt;
 
 &lt;h3 id=&#34;boxes&#34;&gt;Boxes&lt;/h3&gt;
 
-&lt;p&gt;When an error arises, &lt;code&gt;serde_json::from_slice&lt;/code&gt; returns a Result containing a &lt;em&gt;boxed&lt;/em&gt; error.&lt;/p&gt;
+&lt;p&gt;When an error arises, &lt;em&gt;serde_json::from_slice&lt;/em&gt; returns a Result containing a &lt;em&gt;boxed&lt;/em&gt; error.&lt;/p&gt;
 
-&lt;p&gt;Suppose that we declared &lt;code&gt;x: Box&amp;lt;Error&amp;gt;&lt;/code&gt;. &lt;code&gt;x&lt;/code&gt; is referred to as a &amp;ldquo;boxed Error&amp;rdquo;. Specifically, it is an Error &lt;a href=&#34;https://doc.rust-lang.org/book/error-handling.html#the-error-trait&#34;&gt;trait&lt;/a&gt; object allocated to space on the heap.  In Rust, a trait object cannot be &lt;em&gt;passed&lt;/em&gt; around by its owner in its native form because a trait object is &lt;a href=&#34;https://doc.rust-lang.org/nightly/book/unsized-types.html&#34;&gt;unsized&lt;/a&gt;.  Instead, we often box a trait object and then move it in its box.&lt;/p&gt;
+&lt;p&gt;Suppose that we declared &lt;em&gt;x: Box&lt;Error&gt;&lt;/em&gt;. &lt;strong&gt;x&lt;/strong&gt; is referred to as a &amp;ldquo;boxed Error&amp;rdquo;. Specifically, it is an Error &lt;a href=&#34;https://doc.rust-lang.org/book/error-handling.html#the-error-trait&#34;&gt;trait&lt;/a&gt; object allocated to space on the heap.  In Rust, a trait object cannot be &lt;em&gt;passed&lt;/em&gt; around by its owner in its native form because a trait object is &lt;a href=&#34;https://doc.rust-lang.org/nightly/book/unsized-types.html&#34;&gt;unsized&lt;/a&gt;.  Instead, we often box a trait object and then move it in its box.&lt;/p&gt;
 
 &lt;h3 id=&#34;results&#34;&gt;Results&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;Result&amp;lt;Vec&amp;lt;Permission&amp;gt;, Box&amp;lt;Error&amp;gt;&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;code&gt;Result&lt;/code&gt; is an &lt;a href=&#34;https://doc.rust-lang.org/std/result/index.html&#34;&gt;enumerated type&lt;/a&gt; that can take one of two forms:  a success (Ok) or failure (Err).  So, our call to &lt;code&gt;serde_json::from_slice&lt;/code&gt; returns a Result type that will either be a Result::Ok(x), where x is a Vector of Permissions, or a Result::Err(e) where e is a boxed error.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Result&lt;/em&gt; is an &lt;a href=&#34;https://doc.rust-lang.org/std/result/index.html&#34;&gt;enumerated type&lt;/a&gt; that can take one of two forms:  a success (Ok) or failure (Err).  So, our call to &lt;em&gt;serde_json::from_slice&lt;/em&gt; returns a Result type that will either be a Result::Ok(x), where x is a Vector of Permissions, or a Result::Err(e) where e is a boxed error.&lt;/p&gt;
 </description>
     </item>
     
@@ -803,7 +801,7 @@ mod test {
 &lt;p&gt;In Rust, your unit tests exist within the module that they test, as a sub-module.  This approach is a departure from how unit testing is implemented in other programming languages &amp;ndash; within modules separate from their test targets.  This practice is entirely safe and sound for the following two reasons:&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Unit tests are distinguished from the rest of a module  by decorating the section of unit testing code with a special &lt;code&gt;#[cfg(test)]&lt;/code&gt; attribute and encapsulating all of the tests within a &amp;ldquo;test&amp;rdquo; sub-module: &lt;code&gt;mod test {..}&lt;/code&gt;.  This attribute allows the compiler to ignore the section of code it decorates unless the compiler is explicitly instructed to run tests, such as by invoking &amp;ldquo;cargo test&amp;rdquo; from the command line.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Unit tests are distinguished from the rest of a module  by decorating the section of unit testing code with a special &lt;em&gt;#[cfg(test)]&lt;/em&gt; attribute and encapsulating all of the tests within a &amp;ldquo;test&amp;rdquo; sub-module: &lt;em&gt;mod test {..}&lt;/em&gt;.  This attribute allows the compiler to ignore the section of code it decorates unless the compiler is explicitly instructed to run tests, such as by invoking &amp;ldquo;cargo test&amp;rdquo; from the command line.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;Unit tests test public &lt;em&gt;and&lt;/em&gt; private objects.  Private objects are not accessible from outside the module that they exist but they are accessible, through imports, by descendant sub-modules (such as the test sub-module).&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
@@ -814,7 +812,7 @@ mod test {
     }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The &lt;code&gt;#[test]&lt;/code&gt; attribute is used to tell the compiler that the function it decorates is a test function and is to be run as a test unit.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;#[test]&lt;/em&gt; attribute is used to tell the compiler that the function it decorates is a test function and is to be run as a test unit.&lt;/p&gt;
 </description>
     </item>
     

@@ -73,7 +73,7 @@ b, strong, label, th {
     transition: all 0.5s ease;
 }
 #grav-logo {
-    max-width: 60%;
+    max-width: 100%;
 }
 #grav-logo path {
     fill: #fff !important;

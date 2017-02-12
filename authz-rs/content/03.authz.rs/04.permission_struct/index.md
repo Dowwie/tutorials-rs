@@ -22,6 +22,6 @@ pub struct Permission {
 }
 ```
 
-Suppose we were to model a permission that describes a bank account withdrawal from a particular bank account: ``bankaccount:withdrawal:account12345``.  In this example, our Permission's domain is ``bankaccount`` , actions is a HashSet (of Strings) containing the ``withdraw`` String, and targets is a HashSet (of Strings) containing the ``account12345`` String.
+Suppose we were to model a permission that describes a bank account withdrawal from a particular bank account: *bankaccount:withdrawal:account12345*.  In this example, our Permission's domain is *bankaccount* , actions is a HashSet (of Strings) containing the *withdraw* String, and targets is a HashSet (of Strings) containing the *account12345* String.
 
 This struct definition would have sufficed had we not needed to be able to (de)serialize instances of a Permission.  However, since Permissions are serializable, we must update the struct definition accordingly.

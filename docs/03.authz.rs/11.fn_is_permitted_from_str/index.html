@@ -2,6 +2,9 @@
 <html lang="en" class="js csstransforms3d">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
+    <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="generator" content="Hugo 0.18.1" />
     <meta name="description" content="">
@@ -32,7 +35,7 @@
   <div id="header-wrapper">
     <div id="header">
       <a id="logo" href="http://www.daringordon.com/tutorials-rs">
-<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.svg" />
+<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.png" />
 </a>
 
     </div>
@@ -314,9 +317,9 @@
 }
 </code></pre>
 
-<p><code>is_permitted_from_str</code> determines whether a required permission, expressed as a borrowed string, is satisfied by permissions assigned to a user, expressed as an iterator of borrowed strings.</p>
+<p><em>is_permitted_from_str</em> determines whether a required permission, expressed as a borrowed string, is satisfied by permissions assigned to a user, expressed as an iterator of borrowed strings.</p>
 
-<p><code>is_permitted_from_str</code> is a function that is generic over one type, I.  The where clause constrains (bounds) what type is accepted for I:  a type that implements IntoIterator and whose items are strings.  This approach is used so that the function that calls <code>is_permitted_from_str</code> doesn&rsquo;t have to convert its dataset into a collection prior to passing it.</p>
+<p><em>is_permitted_from_str</em> is a function that is generic over one type, I.  The where clause constrains (bounds) what type is accepted for I:  a type that implements IntoIterator and whose items are strings.  This approach is used so that the function that calls <em>is_permitted_from_str</em> doesn&rsquo;t have to convert its dataset into a collection prior to passing it.</p>
 
 
       

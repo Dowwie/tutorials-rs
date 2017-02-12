@@ -2,6 +2,9 @@
 <html lang="en" class="js csstransforms3d">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
+    <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="generator" content="Hugo 0.18.1" />
     <meta name="description" content="">
@@ -32,7 +35,7 @@
   <div id="header-wrapper">
     <div id="header">
       <a id="logo" href="http://www.daringordon.com/tutorials-rs">
-<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.svg" />
+<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.png" />
 </a>
 
     </div>
@@ -310,7 +313,7 @@
 }
 </code></pre>
 
-<p>Suppose we were to model a permission that describes a bank account withdrawal from a particular bank account: <code>bankaccount:withdrawal:account12345</code>.  In this example, our Permission&rsquo;s domain is <code>bankaccount</code> , actions is a HashSet (of Strings) containing the <code>withdraw</code> String, and targets is a HashSet (of Strings) containing the <code>account12345</code> String.</p>
+<p>Suppose we were to model a permission that describes a bank account withdrawal from a particular bank account: <em>bankaccount:withdrawal:account12345</em>.  In this example, our Permission&rsquo;s domain is <em>bankaccount</em> , actions is a HashSet (of Strings) containing the <em>withdraw</em> String, and targets is a HashSet (of Strings) containing the <em>account12345</em> String.</p>
 
 <p>This struct definition would have sufficed had we not needed to be able to (de)serialize instances of a Permission.  However, since Permissions are serializable, we must update the struct definition accordingly.</p>
 

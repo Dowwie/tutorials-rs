@@ -2,6 +2,9 @@
 <html lang="en" class="js csstransforms3d">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
+    <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="generator" content="Hugo 0.18.1" />
     <meta name="description" content="">
@@ -32,7 +35,7 @@
   <div id="header-wrapper">
     <div id="header">
       <a id="logo" href="http://www.daringordon.com/tutorials-rs">
-<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.svg" />
+<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.png" />
 </a>
 
     </div>
@@ -305,11 +308,11 @@
 
 </code></pre>
 
-<p><code>perms_from_buffer</code> de-serializes JSON to a Vector of Permissions. It borrows serialized_perms (a slice of bytes) and returns a Result that is either a <a href="https://doc.rust-lang.org/book/vectors.html">Vector</a> of Permissions or a Boxed Error.</p>
+<p><em>perms_from_buffer</em> de-serializes JSON to a Vector of Permissions. It borrows serialized_perms (a slice of bytes) and returns a Result that is either a <a href="https://doc.rust-lang.org/book/vectors.html">Vector</a> of Permissions or a Boxed Error.</p>
 
 <h2 id="byte-slices">Byte Slices</h2>
 
-<p>Notice how this function borrows <code>serialized_perms</code>.  <code>serialized_perms</code> is a slice of bytes whose type is expressed in Rust as <code>&amp;[u8]</code>. <code>serialized_perms</code> is in the form of a byte slice, rather than a string, because the JSON is stored in a particular datastore as bytes and consequently received from a datastore as bytes. No prior string conversion is necessary prior to handing the JSON over to the <code>serde_json</code> library for de-serialization because <code>serde_json</code> offers a <code>from_slice</code> function that can read byte slices.</p>
+<p>Notice how this function borrows <em>serialized_perms</em>.  <em>serialized_perms</em> is a slice of bytes whose type is expressed in Rust as <strong>&amp;[u8]</strong>. <em>serialized_perms</em> is in the form of a byte slice, rather than a string, because the JSON is stored in a particular datastore as bytes and consequently received from a datastore as bytes. No prior string conversion is necessary prior to handing the JSON over to the <em>serde_json</em> library for de-serialization because <em>serde_json</em> offers a <em>from_slice</em> function that can read byte slices.</p>
 
 <h2 id="error-handling">Error Handling</h2>
 
@@ -318,22 +321,22 @@
 <pre><code class="language-rust">let result = try!(serde_json::from_slice(serialized_perms));
 </code></pre>
 
-<p><code>try!</code> is a helper <a href="https://doc.rust-lang.org/beta/book/macros.html">macro</a> that reduces boilerplate code involved with calling a procedure and handling any errors that may arise from the call.  In the event that the code executed within a <code>try!</code> block raises an error, <code>try!</code> will either propagate <em>that</em> error or an error of your liking up the call stack without resuming execution of any other code within <code>perms_from_buffer</code>.  Because of the early return, <code>try!</code> can only be used in functions that return a Result type.  We address this requirement with our return type:  <code>Result&lt;Vec&lt;Permission&gt;, Box&lt;Error&gt;&gt;</code></p>
+<p><em>try!</em> is a helper <a href="https://doc.rust-lang.org/beta/book/macros.html">macro</a> that reduces boilerplate code involved with calling a procedure and handling any errors that may arise from the call.  In the event that the code executed within a <em>try!</em> block raises an error, <em>try!</em> will either propagate <em>that</em> error or an error of your liking up the call stack without resuming execution of any other code within <em>perms_from_buffer</em>.  Because of the early return, <em>try!</em> can only be used in functions that return a Result type.  We address this requirement with our return type:  <em>Result<Vec<Permission>, Box<Error>&gt;</em></p>
 
-<p>In the event that <code>let result = serde_json::from_slice(serialized_perms)</code> doesn&rsquo;t raise an error, the <code>result</code> <em>pattern</em> is bound to the value returned by the function call: a Vector of Permissions.</p>
+<p>In the event that <em>let result = serde_json::from_slice(serialized_perms)</em> doesn&rsquo;t raise an error, the <em>pattern</em>, named &lsquo;result&rsquo;, is bound to the value returned by the function call: a Vector of Permissions.</p>
 
 <h3 id="boxes">Boxes</h3>
 
-<p>When an error arises, <code>serde_json::from_slice</code> returns a Result containing a <em>boxed</em> error.</p>
+<p>When an error arises, <em>serde_json::from_slice</em> returns a Result containing a <em>boxed</em> error.</p>
 
-<p>Suppose that we declared <code>x: Box&lt;Error&gt;</code>. <code>x</code> is referred to as a &ldquo;boxed Error&rdquo;. Specifically, it is an Error <a href="https://doc.rust-lang.org/book/error-handling.html#the-error-trait">trait</a> object allocated to space on the heap.  In Rust, a trait object cannot be <em>passed</em> around by its owner in its native form because a trait object is <a href="https://doc.rust-lang.org/nightly/book/unsized-types.html">unsized</a>.  Instead, we often box a trait object and then move it in its box.</p>
+<p>Suppose that we declared <em>x: Box<Error></em>. <strong>x</strong> is referred to as a &ldquo;boxed Error&rdquo;. Specifically, it is an Error <a href="https://doc.rust-lang.org/book/error-handling.html#the-error-trait">trait</a> object allocated to space on the heap.  In Rust, a trait object cannot be <em>passed</em> around by its owner in its native form because a trait object is <a href="https://doc.rust-lang.org/nightly/book/unsized-types.html">unsized</a>.  Instead, we often box a trait object and then move it in its box.</p>
 
 <h3 id="results">Results</h3>
 
 <pre><code class="language-rust">Result&lt;Vec&lt;Permission&gt;, Box&lt;Error&gt;&gt;
 </code></pre>
 
-<p><code>Result</code> is an <a href="https://doc.rust-lang.org/std/result/index.html">enumerated type</a> that can take one of two forms:  a success (Ok) or failure (Err).  So, our call to <code>serde_json::from_slice</code> returns a Result type that will either be a Result::Ok(x), where x is a Vector of Permissions, or a Result::Err(e) where e is a boxed error.</p>
+<p><em>Result</em> is an <a href="https://doc.rust-lang.org/std/result/index.html">enumerated type</a> that can take one of two forms:  a success (Ok) or failure (Err).  So, our call to <em>serde_json::from_slice</em> returns a Result type that will either be a Result::Ok(x), where x is a Vector of Permissions, or a Result::Err(e) where e is a boxed error.</p>
 
 
       

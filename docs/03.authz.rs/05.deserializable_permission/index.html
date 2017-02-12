@@ -2,6 +2,9 @@
 <html lang="en" class="js csstransforms3d">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
+    <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
+    <meta http-equiv="pragma" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="generator" content="Hugo 0.18.1" />
     <meta name="description" content="">
@@ -32,7 +35,7 @@
   <div id="header-wrapper">
     <div id="header">
       <a id="logo" href="http://www.daringordon.com/tutorials-rs">
-<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.svg" />
+<img src="http://www.daringordon.com/tutorials-rs/images/tutorials.png" />
 </a>
 
     </div>
@@ -311,10 +314,9 @@ pub struct Permission {
     #[serde(default = &quot;default_hash_part&quot;)]
     targets: HashSet&lt;String&gt;
 }
-
-## Attributes
-
 </code></pre>
+
+<h2 id="center-attributes-center"><center>Attributes</center></h2>
 
 <p>Notice how Permission and its three fields are each decorated by a line beginning with &ldquo;#[&hellip;]&ldquo;.  This hash-bracket syntax denotes the use of Rust <a href="https://doc.rust-lang.org/book/attributes.html">Attributes</a>. An Attribute is used in a declarative style of programming, decorating its target below.</p>
 
@@ -326,7 +328,7 @@ pub struct Permission {
 
 <p>The <em>derive</em> Attribute automatically generates traits for data structures. This particular declaration derives 4 traits for Permission: Debug, PartialEq, Serialize, and Deserialize.</p>
 
-<h3 id="custom-attributes">Custom Attributes</h3>
+<h3 id="center-custom-attributes-center"><center>Custom Attributes</center></h3>
 
 <pre><code class="language-rust">#[serde(default = &quot;default_part&quot;)]
 domain: String,
@@ -338,9 +340,9 @@ actions: HashSet&lt;String&gt;,
 targets: HashSet&lt;String&gt;
 </code></pre>
 
-<p>These are customized Attributes in that they are not sourced from Rust&rsquo;s standard library of Attributes. Rust supports customized Attributes only under one condition:  that the custom Attribute(s) is for &ldquo;something&rdquo; being derived.  In this example, our custom <code>#[serde(...)]</code> Attribute is allowed by the Rust compiler because the Attribute is decorating a field that is part of a struct that is having a Deserialize trait derived for it.  The Deserialize trait makes use of the <code>#[serde(...)]</code> attribute when it needs to obtain a default value for the decorated field.  In this example, we are declaring a function to call for a default field value.  For instance, the &ldquo;default_hash_part&rdquo; function is called by serde during deserialization when no value is available for the <code>actions</code> field.</p>
+<p>These are customized Attributes in that they are not sourced from Rust&rsquo;s standard library of Attributes. Rust supports customized Attributes only under one condition:  that the custom Attribute(s) is for &ldquo;something&rdquo; being derived.  In this example, our custom <em>#[serde(&hellip;)]</em> Attribute is allowed by the Rust compiler because the Attribute is decorating a field that is part of a struct that is having a Deserialize trait derived for it.  The Deserialize trait makes use of the <em>#[serde(&hellip;)]</em> attribute when it needs to obtain a default value for the decorated field.  In this example, we are declaring a function to call for a default field value.  For instance, the &ldquo;default_hash_part&rdquo; function is called by serde during deserialization when no value is available for the <em>actions</em> field.</p>
 
-<h2 id="default-value-functions-for-serde-deserialization">Default-Value Functions for Serde Deserialization</h2>
+<h2 id="center-default-value-functions-for-serde-deserialization-center"><center>Default-Value Functions for Serde Deserialization</center></h2>
 
 <p>Serde calls the following functions to obtain default values for fields unpresented in serialized messages.</p>
 
@@ -349,15 +351,15 @@ targets: HashSet&lt;String&gt;
 }
 </code></pre>
 
-<p>The function <code>default_part</code> is a very basic function that converts a string primitive to a String and returns the String.  There are <a href="http://rustbyexample.com/std/str.html">two types of strings</a> in Rust:  <code>&amp;str</code> and <code>String</code>.  <code>&quot;*&quot;</code> is a string primitive, represented in Rust as <code>&amp;str</code>.  We convert this primitive to a String type by calling the to_string() method of the str primitive.</p>
+<p>The function <em>default_part</em> is a very basic function that converts a string primitive to a String and returns the String.  There are <a href="http://rustbyexample.com/std/str.html">two types of strings</a> in Rust:  <strong><em>&amp;str</em></strong> and <strong><em>String</em></strong>.  <em>&ldquo;</em>&ldquo;* is a string primitive, represented in Rust as <em>&amp;str</em>.  We convert this primitive to a String type by calling the to_string() method of the str primitive.</p>
 
 <pre><code class="language-rust">fn default_hash_part() -&gt; HashSet&lt;String&gt; {
     [&quot;*&quot;].into_iter().map(|s| s.to_string()).collect()
 }
 </code></pre>
 
-<p>The function <code>default_hash_part</code> returns a HashSet (of Strings).
-[&rdquo;*&ldquo;] is a single-string array, represented as `<code>[&amp;str; 1]</code>.  It is converted <em>into</em> an iterator that has, as part of its api, a <code>map</code> function that executes a string conversion closure for each element of the iterator.  Once the mapping finishes, the collect function gathers all of the elements of the iterator together and stores the Strings into a HashSet<String>.</p>
+<p>The function <em>default_hash_part</em> returns a HashSet (of Strings).
+[&rdquo;*&ldquo;] is a single-string array, represented as <strong><em>[&str; 1]</em></strong>.  It is converted <em>into</em> an iterator that has, as part of its api, a <em>map</em> function that executes a string conversion closure for each element of the iterator.  Once the mapping finishes, the collect function gathers all of the elements of the iterator together and stores the Strings into a HashSet<String>.</p>
 
 
       
