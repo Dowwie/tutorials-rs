@@ -8,7 +8,8 @@ title = "fn part_from_str"
 weight = 130
 +++
 
-##<center>fn part_from_str</center>
+## <center>fn part_from_str</center>
+<hr/>
 
 ```rust
 fn part_from_str(s: Option<&str>) -> HashSet<String> {

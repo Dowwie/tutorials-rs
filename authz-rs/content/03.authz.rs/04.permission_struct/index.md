@@ -9,6 +9,7 @@ weight = 70
 +++
 
 ## <center>The Permission Struct</center>
+<hr/>
 
 A [struct](https://doc.rust-lang.org/book/structs.html) is the construct used in Rust to create more complex data types.  It allows a developer to manage state and associated behaviors, similar to the role of a class in object oriented languages.
 

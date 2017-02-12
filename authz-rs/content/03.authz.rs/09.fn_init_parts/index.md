@@ -8,7 +8,8 @@ title = "fn init_parts"
 weight = 120
 +++
 
-##<center>fn init_parts</center>
+## <center>fn init_parts</center>
+<hr/>
 
 ```rust
 fn init_parts(wildcard_perm: &str) -> (String, HashSet<String>, HashSet<String>) {

@@ -9,6 +9,7 @@ weight = 90
 +++
 
 ## <center>Permission Implementation</center>
+<hr/>
 
 ```rust
 impl<'a> Permission{

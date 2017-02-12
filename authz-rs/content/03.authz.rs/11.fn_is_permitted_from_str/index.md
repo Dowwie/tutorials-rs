@@ -8,7 +8,8 @@ title = "fn is_permitted_from_str"
 weight = 140
 +++
 
-##<center>fn is_permitted_from_str</center>
+## <center>fn is_permitted_from_str</center>
+<hr/>
 
 ```rust
 pub fn is_permitted_from_str<'a, I>(required_perm: &str, assigned_perms: I) -> i32

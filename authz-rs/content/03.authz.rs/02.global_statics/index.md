@@ -9,6 +9,7 @@ weight = 50
 +++
 
 ## <center>Global Statics</center>
+<hr/>
 
 ```rust
 static PART_DELIMETER: &'static str = ":";

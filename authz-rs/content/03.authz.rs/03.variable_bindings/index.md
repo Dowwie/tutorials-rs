@@ -9,7 +9,7 @@ weight = 60
 +++
 
 ## <center>static vs let</center>
-
+<hr/>
 Recall from the prior slide our creation of two global, static variables:
 
 ```rust

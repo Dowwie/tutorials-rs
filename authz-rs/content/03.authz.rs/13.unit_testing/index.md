@@ -9,6 +9,7 @@ weight = 160
 +++
 
 ## <center>Unit Testing</center>
+<hr/>
 
 ```rust
 #[cfg(test)]

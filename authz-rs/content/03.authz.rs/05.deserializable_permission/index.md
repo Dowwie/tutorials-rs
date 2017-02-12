@@ -9,11 +9,12 @@ weight = 80
 +++
 
 ##<center>A (De)Serializable Permission</center>
+<hr/>
 
 ```rust
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Permission {
-    
+
     #[serde(default = "default_part")]
     domain: String,
 

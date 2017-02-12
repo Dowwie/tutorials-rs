@@ -295,11 +295,12 @@
 
 
 
-<p>##<center>A (De)Serializable Permission</center></p>
+<p>##<center>A (De)Serializable Permission</center>
+<hr/></p>
 
 <pre><code class="language-rust">#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Permission {
-    
+
     #[serde(default = &quot;default_part&quot;)]
     domain: String,
 

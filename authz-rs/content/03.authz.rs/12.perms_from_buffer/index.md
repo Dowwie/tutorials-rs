@@ -8,7 +8,8 @@ title = "fn perms_from_buffer"
 weight = 150
 +++
 
-##<center>fn perms_from_buffer</center>
+## <center>fn perms_from_buffer</center>
+<hr/>
 
 ```rust
 pub fn perms_from_buffer(serialized_perms: &[u8]) -> Result<Vec<Permission>, Box<Error>> {

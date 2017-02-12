@@ -295,7 +295,9 @@
 
 
 
-<p>##<center>fn perms_from_buffer</center></p>
+<h2 id="center-fn-perms-from-buffer-center"><center>fn perms_from_buffer</center></h2>
+
+<hr/>
 
 <pre><code class="language-rust">pub fn perms_from_buffer(serialized_perms: &amp;[u8]) -&gt; Result&lt;Vec&lt;Permission&gt;, Box&lt;Error&gt;&gt; {
     let result = try!(serde_json::from_slice(serialized_perms));

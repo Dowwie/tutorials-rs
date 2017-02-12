@@ -401,6 +401,8 @@ mod test {
 
 &lt;h2 id=&#34;center-imports-center&#34;&gt;&lt;center&gt;Imports&lt;/center&gt;&lt;/h2&gt;
 
+&lt;hr/&gt;
+
 &lt;h3 id=&#34;crates&#34;&gt;Crates&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;extern crate serde;
@@ -430,6 +432,8 @@ use std::collections::HashSet;
 
 &lt;h2 id=&#34;center-global-statics-center&#34;&gt;&lt;center&gt;Global Statics&lt;/center&gt;&lt;/h2&gt;
 
+&lt;hr/&gt;
+
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;static PART_DELIMETER: &amp;amp;&#39;static str = &amp;quot;:&amp;quot;;
 static SUBPART_DELIMETER: &amp;amp;&#39;static str = &amp;quot;,&amp;quot;;
 &lt;/code&gt;&lt;/pre&gt;
@@ -447,6 +451,8 @@ static SUBPART_DELIMETER: &amp;amp;&#39;static str = &amp;quot;,&amp;quot;;
       <description>
 
 &lt;h2 id=&#34;center-static-vs-let-center&#34;&gt;&lt;center&gt;static vs let&lt;/center&gt;&lt;/h2&gt;
+
+&lt;hr/&gt;
 
 &lt;p&gt;Recall from the prior slide our creation of two global, static variables:&lt;/p&gt;
 
@@ -477,6 +483,8 @@ static SUBPART_DELIMETER: &amp;amp;&#39;static str = &amp;quot;,&amp;quot;;
 
 &lt;h2 id=&#34;center-the-permission-struct-center&#34;&gt;&lt;center&gt;The Permission Struct&lt;/center&gt;&lt;/h2&gt;
 
+&lt;hr/&gt;
+
 &lt;p&gt;A &lt;a href=&#34;https://doc.rust-lang.org/book/structs.html&#34;&gt;struct&lt;/a&gt; is the construct used in Rust to create more complex data types.  It allows a developer to manage state and associated behaviors, similar to the role of a class in object oriented languages.&lt;/p&gt;
 
 &lt;p&gt;A Permission type is modeled as a 3-field struct:&lt;/p&gt;
@@ -502,11 +510,12 @@ static SUBPART_DELIMETER: &amp;amp;&#39;static str = &amp;quot;,&amp;quot;;
       <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/05.deserializable_permission/</guid>
       <description>
 
-&lt;p&gt;##&lt;center&gt;A (De)Serializable Permission&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;##&lt;center&gt;A (De)Serializable Permission&lt;/center&gt;
+&lt;hr/&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Permission {
-    
+
     #[serde(default = &amp;quot;default_part&amp;quot;)]
     domain: String,
 
@@ -575,6 +584,8 @@ targets: HashSet&amp;lt;String&amp;gt;
       <description>
 
 &lt;h2 id=&#34;center-permission-implementation-center&#34;&gt;&lt;center&gt;Permission Implementation&lt;/center&gt;&lt;/h2&gt;
+
+&lt;hr/&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;impl&amp;lt;&#39;a&amp;gt; Permission{
     pub fn new(wildcard_perm: &amp;amp;str) -&amp;gt; Permission { ... }
@@ -681,7 +692,9 @@ we call ``implies_from_perm`` from instance ``permission_1``:
       <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_init_parts/</guid>
       <description>
 
-&lt;p&gt;##&lt;center&gt;fn init_parts&lt;/center&gt;&lt;/p&gt;
+&lt;h2 id=&#34;center-fn-init-parts-center&#34;&gt;&lt;center&gt;fn init_parts&lt;/center&gt;&lt;/h2&gt;
+
+&lt;hr/&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;fn init_parts(wildcard_perm: &amp;amp;str) -&amp;gt; (String, HashSet&amp;lt;String&amp;gt;, HashSet&amp;lt;String&amp;gt;) {
     let mut iter = wildcard_perm.split(PART_DELIMETER).map(str::trim);
@@ -747,7 +760,11 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
       <pubDate>Sun, 12 Feb 2017 10:00:00 +0000</pubDate>
       
       <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_part_from_str/</guid>
-      <description>&lt;p&gt;##&lt;center&gt;fn part_from_str&lt;/center&gt;&lt;/p&gt;
+      <description>
+
+&lt;h2 id=&#34;center-fn-part-from-str-center&#34;&gt;&lt;center&gt;fn part_from_str&lt;/center&gt;&lt;/h2&gt;
+
+&lt;hr/&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;fn part_from_str(s: Option&amp;lt;&amp;amp;str&amp;gt;) -&amp;gt; HashSet&amp;lt;String&amp;gt; {
     let mut set = HashSet::new();
@@ -780,7 +797,11 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
       <pubDate>Sun, 12 Feb 2017 10:00:00 +0000</pubDate>
       
       <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/11.fn_is_permitted_from_str/</guid>
-      <description>&lt;p&gt;##&lt;center&gt;fn is_permitted_from_str&lt;/center&gt;&lt;/p&gt;
+      <description>
+
+&lt;h2 id=&#34;center-fn-is-permitted-from-str-center&#34;&gt;&lt;center&gt;fn is_permitted_from_str&lt;/center&gt;&lt;/h2&gt;
+
+&lt;hr/&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;pub fn is_permitted_from_str&amp;lt;&#39;a, I&amp;gt;(required_perm: &amp;amp;str, assigned_perms: I) -&amp;gt; i32
     where I: IntoIterator&amp;lt;Item = &amp;amp;&#39;a str&amp;gt;
@@ -811,7 +832,9 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
       <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/12.perms_from_buffer/</guid>
       <description>
 
-&lt;p&gt;##&lt;center&gt;fn perms_from_buffer&lt;/center&gt;&lt;/p&gt;
+&lt;h2 id=&#34;center-fn-perms-from-buffer-center&#34;&gt;&lt;center&gt;fn perms_from_buffer&lt;/center&gt;&lt;/h2&gt;
+
+&lt;hr/&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;pub fn perms_from_buffer(serialized_perms: &amp;amp;[u8]) -&amp;gt; Result&amp;lt;Vec&amp;lt;Permission&amp;gt;, Box&amp;lt;Error&amp;gt;&amp;gt; {
     let result = try!(serde_json::from_slice(serialized_perms));
