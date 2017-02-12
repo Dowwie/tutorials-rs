@@ -8,7 +8,7 @@ title = "(De)Serializable Permission"
 weight = 80
 +++
 
-##<center>A (De)Serializable Permission</center>
+## <center>A (De)Serializable Permission</center>
 <hr/>
 
 ```rust
