@@ -39,7 +39,7 @@ pub use authz::{is_permitted_from_str, is_permitted_from_perm, perms_from_buffer
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;extern crate X
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;extern crate is Rust&amp;rsquo;s import mechanism (or is it Cargo&amp;rsquo;s? TBD)&lt;/p&gt;
+&lt;p&gt;extern crate is Rust&amp;rsquo;s import mechanism&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;#[macro_use]
 extern crate serde_derive;

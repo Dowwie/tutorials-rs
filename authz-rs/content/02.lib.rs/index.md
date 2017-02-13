@@ -33,7 +33,7 @@ The contents of the authz crate are referenced in another project through lib.rs
 ```rust
 extern crate X
 ```
-extern crate is Rust's import mechanism (or is it Cargo's? TBD)
+extern crate is Rust's import mechanism
 
 
 ```rust

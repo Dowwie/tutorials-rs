@@ -14,7 +14,7 @@ weight = 160
 ```rust
 #[cfg(test)]
 mod test {
-    extern crate serde_json;
+    use serde_json;
     use authz::{Permission, is_permitted_from_str, is_permitted_from_perm, perms_from_buffer};
     use std::collections::HashSet;
 

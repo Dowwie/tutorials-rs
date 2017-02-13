@@ -152,7 +152,7 @@ pub fn perms_from_buffer(serialized_perms: &amp;amp;[u8]) -&amp;gt;
 
 #[cfg(test)]
 mod test {
-    extern crate serde_json;
+    use serde_json;
     use authz::{Permission, is_permitted_from_str,
                 is_permitted_from_perm, perms_from_buffer};
     use std::collections::HashSet;
@@ -331,7 +331,7 @@ use std::collections::HashSet;
       <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/02.global_statics/</guid>
       <description>
 
-&lt;h2 id=&#34;center-global-statics-center&#34;&gt;&lt;center&gt;Global Statics&lt;/center&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;center-global-statics-vs-constants-center&#34;&gt;&lt;center&gt;Global Statics vs Constants&lt;/center&gt;&lt;/h2&gt;
 
 &lt;hr/&gt;
 
@@ -340,6 +340,12 @@ static SUBPART_DELIMETER: &amp;amp;&#39;static str = &amp;quot;,&amp;quot;;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;A string primitive is represented in Rust as &lt;code&gt;&amp;amp;&#39;static str&lt;/code&gt;.  Declaring that string as &lt;a href=&#34;https://doc.rust-lang.org/book/const-and-static.html#static&#34;&gt;static&lt;/a&gt; makes the string accessible throughout the &lt;strong&gt;authz&lt;/strong&gt; module and does not inline the variable upon use (it gets a fixed memory location).  Statics live for the entire lifetime of the Rust program.  Note the use of the single apostrophe following the ampersand:  this denotes the use of a &lt;a href=&#34;https://doc.rust-lang.org/book/lifetimes.html&#34;&gt;lifetime&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This project chose &lt;strong&gt;static&lt;/strong&gt; rather than &lt;strong&gt;const&lt;/strong&gt; for no particular reason.  There was no requirement here for a memory location associated with a constant.  Rather than *static, the &lt;a href=&#34;https://doc.rust-lang.org/book/const-and-static.html#which-construct-should-i-use&#34;&gt;Rust book&lt;/a&gt; recommends &lt;em&gt;const&lt;/em&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;const PART_DELIMETER: &amp;amp;&#39;static str = &amp;quot;:&amp;quot;;
+const SUBPART_DELIMETER: &amp;amp;&#39;static str = &amp;quot;,&amp;quot;;
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
@@ -788,7 +794,7 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
 
 &lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;#[cfg(test)]
 mod test {
-    extern crate serde_json;
+    use serde_json;
     use authz::{Permission, is_permitted_from_str, is_permitted_from_perm, perms_from_buffer};
     use std::collections::HashSet;
 
