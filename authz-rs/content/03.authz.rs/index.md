@@ -2,7 +2,7 @@
 chapter = true
 date = "2017-02-12T10:00:00-00:00"
 icon = "<b>3. </b>"
-next = "/"
+next = "/03.authz.rs/01.imports"
 prev = "/03.authz.rs/11.perms_from_buffer"
 title = "authz.rs"
 weight = 30
