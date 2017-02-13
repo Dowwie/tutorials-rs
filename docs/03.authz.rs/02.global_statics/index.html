@@ -308,7 +308,7 @@ static SUBPART_DELIMETER: &amp;'static str = &quot;,&quot;;
 
 <p>A string primitive is represented in Rust as <code>&amp;'static str</code>.  Declaring that string as <a href="https://doc.rust-lang.org/book/const-and-static.html#static">static</a> makes the string accessible throughout the <strong>authz</strong> module and does not inline the variable upon use (it gets a fixed memory location).  Statics live for the entire lifetime of the Rust program.  Note the use of the single apostrophe following the ampersand:  this denotes the use of a <a href="https://doc.rust-lang.org/book/lifetimes.html">lifetime</a>.</p>
 
-<p>This project chose <strong>static</strong> rather than <strong>const</strong> for no particular reason.  There was no requirement here for a memory location associated with a constant.  Rather than *static, the <a href="https://doc.rust-lang.org/book/const-and-static.html#which-construct-should-i-use">Rust book</a> recommends <em>const</em>:</p>
+<p>This project chose <strong>static</strong> rather than <strong>const</strong> for no particular reason.  There was no requirement here for a memory location associated with a constant.  Rather than <em>static</em>, the <a href="https://doc.rust-lang.org/book/const-and-static.html#which-construct-should-i-use">Rust book</a> recommends <em>const</em>:</p>
 
 <pre><code class="language-rust">const PART_DELIMETER: &amp;'static str = &quot;:&quot;;
 const SUBPART_DELIMETER: &amp;'static str = &quot;,&quot;;
