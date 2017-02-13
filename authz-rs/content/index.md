@@ -7,8 +7,11 @@ weight = 0
 +++
 
 ## <center>Welcome to the Tutorial!</center>
+<br>
 
 The goal of this tutorial is to teach Rust-specific concepts using a real-world application of the language.
+
+This tutorial examines the **authz** crate, available at [crates.io](https://crates.io/crates/authz) and [github](github.com/Dowwie/rust-authz).
 
 You are presented a library that enables permission-based authorization.  The business logic used to faciliate permission-based authorization is based on an implementation written in Python for the [Yosai security framework](https://yosaiproject.github.io/yosai). This is not a tutorial about authorization but a brief explanation of what it entails is provided below.
 
