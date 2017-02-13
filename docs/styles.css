@@ -205,34 +205,6 @@ h1 {
     content: "";
 }
 
-.cta {
-    margin-top: 40px;
-}
-
-.cta a {
-    font-family: "Open Sans", sans-serif;
-    background-color: #0096DD;
-    color: #333;
-    display: inline-block;
-    border: 0px none;
-    border-radius: 0.5em;
-    text-transform: uppercase;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.15s ease-in-out 0s;
-    font-size: 1.125rem;
-    min-width: 240px;
-    padding: 20px 30px;
-}
-
-.cta a:hover {
-    background-color: #00A7F7;
-}
-
-.cta a::after {
-    content: " »";
-    white-space: nowrap;
-}
 
 .tutorial-box {
     position: relative;
@@ -399,12 +371,6 @@ ul, menu, dir {
   -webkit-align-items: center;
 }
 
-#cta_header h1 {
-  color: #fff;
-  text-shadow: 2px 2px 3px #000;
-  font-size: 4.5em;
-  margin: 0px;
-}
 
 /* Mozilla FOOTER */
 #colophon .logo a {
@@ -644,17 +610,6 @@ ul, menu, dir {
     .steps li {
         box-sizing: border-box;
         width: 100%;
-    }
-
-    .cta {
-        margin-left: 48px;
-        margin-right: 48px;
-    }
-
-    .cta a {
-        box-sizing: border-box;
-        width: 100%;
-        min-width: 0;
     }
 
     #colophon .col {
