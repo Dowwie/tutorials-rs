@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="http://www.daringordon.com/tutorials-rs/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Lifetimes</title>
+    <title>fn init_parts</title>
     <link href="http://www.daringordon.com/tutorials-rs/css/nucleus.css" rel="stylesheet">
     <link href="http://www.daringordon.com/tutorials-rs/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://www.daringordon.com/tutorials-rs/css/hybrid.css" rel="stylesheet">
@@ -30,7 +30,7 @@
 <link href="http://www.daringordon.com/tutorials-rs/css/authz_tutorial.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/03.authz.rs/07.lifetimes/">
+  <body class="" data-url="/03.authz.rs/08.fn_init_parts/">
     <nav id="sidebar">
   <div id="header-wrapper">
     <div id="header">
@@ -187,56 +187,48 @@
           
           
           
-            <li class="dd-item active" data-nav-id="/03.authz.rs/07.lifetimes/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.lifetimes/">
-                <span>Lifetimes     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/03.authz.rs/08.permission_constructor/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.permission_constructor/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/07.permission_constructor/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.permission_constructor/">
                 <span>Constructor Pattern     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/09.fn_init_parts/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_init_parts/">
+            <li class="dd-item active" data-nav-id="/03.authz.rs/08.fn_init_parts/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.fn_init_parts/">
                 <span>fn init_parts     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/10.fn_part_from_str/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_part_from_str/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/09.fn_part_from_str/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_part_from_str/">
                 <span>fn part_from_str     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/11.fn_is_permitted_from_str/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.fn_is_permitted_from_str/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/10.fn_is_permitted_from_str/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_is_permitted_from_str/">
                 <span>fn is_permitted_from_str     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/12.perms_from_buffer/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.perms_from_buffer/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/11.perms_from_buffer/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.perms_from_buffer/">
                 <span>fn perms_from_buffer     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/13.unit_testing/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/13.unit_testing/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/12.unit_testing/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.unit_testing/">
                 <span>Unit Testing     </i></span>
               </a>
             </li>
@@ -285,7 +277,7 @@
                     
                   
                 
-                <span itemprop="title"> Lifetimes</span>
+                <span itemprop="title"> fn init_parts</span>
               </div>
               
 
@@ -298,20 +290,65 @@
 
 
 
-<h2 id="center-lifetimes-center"><center>Lifetimes</center></h2>
+<h2 id="center-fn-init-parts-center"><center>fn init_parts</center></h2>
 
 <hr/>
 
-<pre><code class="language-rust">impl&lt;'a&gt; Permission
+<pre><code class="language-rust">fn init_parts(wildcard_perm: &amp;str) -&gt; (String, HashSet&lt;String&gt;, HashSet&lt;String&gt;) {
+    let mut iter = wildcard_perm.split(PART_DELIMETER).map(str::trim);
+
+    let domain = match iter.next() {
+        Some(&quot;&quot;) | Some(&quot;*&quot;) | None =&gt; String::from(&quot;*&quot;),
+        Some(domain) =&gt; String::from(domain),
+    };
+    let actions = Permission::part_from_str(iter.next());
+    let targets = Permission::part_from_str(iter.next());
+
+    (domain, actions, targets)
+}
 </code></pre>
 
-<p>We begin the implementation for the Permission struct with the <strong><em>impl</em></strong> keyword.</p>
+<p><em>init_parts</em> turns a string representation of a permission into the 3 fields
+required by the Permission struct, using default values when necessary.</p>
 
-<p>Notice how <em>impl</em> is proceeded by <strong><em>&lt;&lsquo;a&gt;</em></strong>.  This is the convention used to define a <a href="https://doc.rust-lang.org/book/lifetimes.html">lifetime parameter</a>, which we have named <em>a</em>.  Rust forces programmers to take ownership of how long their objects will exist in memory when the compiler cannot infer object lifetime on its own.  We use the single apostrophe followed by the name of the lifetime when we scope our activities within a lifetime.</p>
+<h2 id="chaining-calls">Chaining Calls</h2>
 
-<p>When a type reference is annotated with a lifetime parameter (in this case, &lsquo;a), we are declaring that the reference (borrow) is to remain valid (live) for <em>at least</em> the lifetime of &lsquo;a, if not longer.  In other words, we are declaring the minimum lifespan of a variable in memory.  The compiler&rsquo;s borrow checker keeps objects alive in memory for only as long as it needs to.  In the case of this project, <em>impl&lt;&lsquo;a&gt; Permission</em> is <em>required</em> by the compiler because borrows within the implementation use lifetime &lsquo;a and since they exist within the scope of the implemntation, the implementation must also live for at least as long as it&rsquo;s constituents&rsquo; lifetime &lsquo;a.</p>
+<p><em>init_parts</em> is provided a string primitive (&amp;str), <em>wildcard_perm</em>.</p>
 
-<p>Everything in Rust has a lifetime.  The reason that you don&rsquo;t see them everywhere is that they are often inferred by the compiler.  However, <em>borrows</em> required explicit annotation of lifetimes because the compiler cannot infer an appropriate lifetime for them.</p>
+<pre><code class="language-rust">    let mut iter = wildcard_perm.split(PART_DELIMETER).map(str::trim);
+</code></pre>
+
+<p>This statement is a chain of calls.  The first call splits up the wildcard_perm string using the str::split method.  The string is split using the static global, <em>PART_DELIMETER</em>, as its delimiter.  The <em>split</em> method returns a <a href="https://doc.rust-lang.org/std/str/struct.Split.html">std::str::Split type</a>, which implements the Iterator trait (among others).  With this Split type, the map method is called.  <em>map</em> takes a closure, in this case str::trim, creates an std::iter::Map iterator, and then calls the closure on each element of the iterator, ultimately returning a mutable Map type.</p>
+
+<p>Rather than chaining calls, you could perform the operations in steps.  The only disadvantage of this approach is that it&rsquo;s less concise.  The performance and memory consumption remains the same as with the chain:</p>
+
+<pre><code class="language-rust">    let split_perm = wildcard_perm.split(PART_DELIMETER);
+    let mut iter = split_perm.map(str::trim);
+</code></pre>
+
+<p>Notice how the iterator isn&rsquo;t collected into a collection type, such as a Vector. In this case, collecting wasn&rsquo;t necessary and doing so would have created unnecessary overhead.</p>
+
+<p>We declar iter as a mutable value by using the &lsquo;mut&rsquo; prefix, as presented.  Later in the function are <em>iter.next()</em> calls.  <em>iter.next()</em> is a <em>mutable borrow</em> operation in that it updates the state of iter through a reference (borrow). To facilitate updates to iter from <em>iter.next()</em> calls, iter must be declared mutable.</p>
+
+<h3 id="obtaining-domain-actions-and-targets">Obtaining Domain, Actions, and Targets</h3>
+
+<p>The rest of the function uses the elements of the iter Map to derive values that are bound to three local names:  domain, actions, and targets.  <em>init_parts</em> returns these three bindings in a tuple.</p>
+
+<pre><code class="language-rust">    let domain = match iter.next() {
+        Some(&quot;&quot;) | Some(&quot;*&quot;) | None =&gt; String::from(&quot;*&quot;),
+        Some(domain) =&gt; String::from(domain),
+    };
+</code></pre>
+
+<p>Domain is always the first element of the permission string.  We match on the next (first) element of the Map, iter.  If the element&rsquo;s value is empty, &ldquo;<em>&rdquo;, or doesn&rsquo;t exist, then match returns a String of &ldquo;</em>&rdquo;.  Otherwise, match returns a Stringified version of the element.</p>
+
+<p>Notice how a few values are wrapped by <strong><em>Some</em></strong> or our use of <strong><em>None</em></strong>?  Some and None are the supported values of an <a href="https://doc.rust-lang.org/std/option/enum.Option.html">Option enum</a>.  iter.next() returns an &ldquo;Optionized value&rdquo; and so we match on that.</p>
+
+<pre><code class="language-rust">    let actions = Permission::part_from_str(iter.next());
+    let targets = Permission::part_from_str(iter.next());
+</code></pre>
+
+<p>Finally, actions and targets are bound to values obtained from calls made to the function <em>part_from_str</em>, using the remaining two elements of iter as arguments.  <em>part_from_str</em> is discussed in the next section.</p>
 
 
       
@@ -321,8 +358,8 @@
     </div>
 
     <div id="navigation">
-        <a class="nav nav-prev" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/06.permission_impl"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.permission_constructor" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-prev" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.permission_constructor"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_part_from_str" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>

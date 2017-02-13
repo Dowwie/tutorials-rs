@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="http://www.daringordon.com/tutorials-rs/images/favicon.png" type="image/x-icon" />
 
     
-    <title>fn init_parts</title>
+    <title>Unit Testing</title>
     <link href="http://www.daringordon.com/tutorials-rs/css/nucleus.css" rel="stylesheet">
     <link href="http://www.daringordon.com/tutorials-rs/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://www.daringordon.com/tutorials-rs/css/hybrid.css" rel="stylesheet">
@@ -30,7 +30,7 @@
 <link href="http://www.daringordon.com/tutorials-rs/css/authz_tutorial.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/03.authz.rs/09.fn_init_parts/">
+  <body class="" data-url="/03.authz.rs/12.unit_testing/">
     <nav id="sidebar">
   <div id="header-wrapper">
     <div id="header">
@@ -187,56 +187,48 @@
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/07.lifetimes/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.lifetimes/">
-                <span>Lifetimes     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/03.authz.rs/08.permission_constructor/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.permission_constructor/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/07.permission_constructor/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.permission_constructor/">
                 <span>Constructor Pattern     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item active" data-nav-id="/03.authz.rs/09.fn_init_parts/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_init_parts/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/08.fn_init_parts/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.fn_init_parts/">
                 <span>fn init_parts     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/10.fn_part_from_str/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_part_from_str/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/09.fn_part_from_str/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_part_from_str/">
                 <span>fn part_from_str     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/11.fn_is_permitted_from_str/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.fn_is_permitted_from_str/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/10.fn_is_permitted_from_str/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_is_permitted_from_str/">
                 <span>fn is_permitted_from_str     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/12.perms_from_buffer/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.perms_from_buffer/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/11.perms_from_buffer/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.perms_from_buffer/">
                 <span>fn perms_from_buffer     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/13.unit_testing/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/13.unit_testing/">
+            <li class="dd-item active" data-nav-id="/03.authz.rs/12.unit_testing/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.unit_testing/">
                 <span>Unit Testing     </i></span>
               </a>
             </li>
@@ -285,7 +277,7 @@
                     
                   
                 
-                <span itemprop="title"> fn init_parts</span>
+                <span itemprop="title"> Unit Testing</span>
               </div>
               
 
@@ -298,65 +290,37 @@
 
 
 
-<h2 id="center-fn-init-parts-center"><center>fn init_parts</center></h2>
+<h2 id="center-unit-testing-center"><center>Unit Testing</center></h2>
 
 <hr/>
 
-<pre><code class="language-rust">fn init_parts(wildcard_perm: &amp;str) -&gt; (String, HashSet&lt;String&gt;, HashSet&lt;String&gt;) {
-    let mut iter = wildcard_perm.split(PART_DELIMETER).map(str::trim);
+<pre><code class="language-rust">#[cfg(test)]
+mod test {
+    use serde_json;
+    use authz::{Permission, is_permitted_from_str, is_permitted_from_perm, perms_from_buffer};
+    use std::collections::HashSet;
 
-    let domain = match iter.next() {
-        Some(&quot;&quot;) | Some(&quot;*&quot;) | None =&gt; String::from(&quot;*&quot;),
-        Some(domain) =&gt; String::from(domain),
-    };
-    let actions = Permission::part_from_str(iter.next());
-    let targets = Permission::part_from_str(iter.next());
-
-    (domain, actions, targets)
-}
+    #[test]
+    fn test_new_permission() {
+        ...
+    }
 </code></pre>
 
-<p><em>init_parts</em> turns a string representation of a permission into the 3 fields
-required by the Permission struct, using default values when necessary.</p>
+<p>In Rust, your unit tests exist within the module that they test, as a sub-module.  This approach is a departure from how unit testing is implemented in other programming languages &ndash; within modules separate from their test targets.  This practice is entirely safe and sound for the following two reasons:</p>
 
-<h2 id="chaining-calls">Chaining Calls</h2>
+<ol>
+<li><p>Unit tests are distinguished from the rest of a module  by decorating the section of unit testing code with a special <em>#[cfg(test)]</em> attribute and encapsulating all of the tests within a &ldquo;test&rdquo; sub-module: <em>mod test {..}</em>.  This attribute allows the compiler to ignore the section of code it decorates unless the compiler is explicitly instructed to run tests, such as by invoking &ldquo;cargo test&rdquo; from the command line.</p></li>
 
-<p><em>init_parts</em> is provided a string primitive (&amp;str), <em>wildcard_perm</em>.</p>
+<li><p>Unit tests test public <em>and</em> private objects.  Private objects are not accessible from outside the module that they exist but they are accessible, through imports, by descendant sub-modules (such as the test sub-module).</p></li>
+</ol>
 
-<pre><code class="language-rust">    let mut iter = wildcard_perm.split(PART_DELIMETER).map(str::trim);
+<pre><code class="language-rust">    #[test]
+    fn test_new_permission() {
+        ...
+    }
 </code></pre>
 
-<p>This statement is a chain of calls.  The first call splits up the wildcard_perm string using the str::split method.  The string is split using the static global, <em>PART_DELIMETER</em>, as its delimiter.  The <em>split</em> method returns a <a href="https://doc.rust-lang.org/std/str/struct.Split.html">std::str::Split type</a>, which implements the Iterator trait (among others).  With this Split type, the map method is called.  <em>map</em> takes a closure, in this case str::trim, creates an std::iter::Map iterator, and then calls the closure on each element of the iterator, ultimately returning a mutable Map type.</p>
-
-<p>Rather than chaining calls, you could perform the operations in steps.  The only disadvantage of this approach is that it&rsquo;s less concise.  The performance and memory consumption remains the same as with the chain:</p>
-
-<pre><code class="language-rust">    let split_perm = wildcard_perm.split(PART_DELIMETER);
-    let mut iter = split_perm.map(str::trim);
-</code></pre>
-
-<p>Notice how the iterator isn&rsquo;t collected into a collection type, such as a Vector. In this case, collecting wasn&rsquo;t necessary and doing so would have created unnecessary overhead.</p>
-
-<p>We declar iter as a mutable value by using the &lsquo;mut&rsquo; prefix, as presented.  Later in the function are <em>iter.next()</em> calls.  <em>iter.next()</em> is a <em>mutable borrow</em> operation in that it updates the state of iter through a reference (borrow). To facilitate updates to iter from <em>iter.next()</em> calls, iter must be declared mutable.</p>
-
-<h3 id="obtaining-domain-actions-and-targets">Obtaining Domain, Actions, and Targets</h3>
-
-<p>The rest of the function uses the elements of the iter Map to derive values that are bound to three local names:  domain, actions, and targets.  <em>init_parts</em> returns these three bindings in a tuple.</p>
-
-<pre><code class="language-rust">    let domain = match iter.next() {
-        Some(&quot;&quot;) | Some(&quot;*&quot;) | None =&gt; String::from(&quot;*&quot;),
-        Some(domain) =&gt; String::from(domain),
-    };
-</code></pre>
-
-<p>Domain is always the first element of the permission string.  We match on the next (first) element of the Map, iter.  If the element&rsquo;s value is empty, &ldquo;<em>&rdquo;, or doesn&rsquo;t exist, then match returns a String of &ldquo;</em>&rdquo;.  Otherwise, match returns a Stringified version of the element.</p>
-
-<p>Notice how a few values are wrapped by <strong><em>Some</em></strong> or our use of <strong><em>None</em></strong>?  Some and None are the supported values of an <a href="https://doc.rust-lang.org/std/option/enum.Option.html">Option enum</a>.  iter.next() returns an &ldquo;Optionized value&rdquo; and so we match on that.</p>
-
-<pre><code class="language-rust">    let actions = Permission::part_from_str(iter.next());
-    let targets = Permission::part_from_str(iter.next());
-</code></pre>
-
-<p>Finally, actions and targets are bound to values obtained from calls made to the function <em>part_from_str</em>, using the remaining two elements of iter as arguments.  <em>part_from_str</em> is discussed in the next section.</p>
+<p>The <em>#[test]</em> attribute is used to tell the compiler that the function it decorates is a test function and is to be run as a test unit.</p>
 
 
       
@@ -366,8 +330,8 @@ required by the Permission struct, using default values when necessary.</p>
     </div>
 
     <div id="navigation">
-        <a class="nav nav-prev" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.permission_constructor"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_part_from_str" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-prev" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.perms_from_buffer"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="http://www.daringordon.com/tutorials-rs/" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>

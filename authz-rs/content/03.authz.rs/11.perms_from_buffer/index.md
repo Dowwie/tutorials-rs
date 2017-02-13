@@ -1,9 +1,9 @@
 +++
 chapter = true
 date = "2017-02-12T10:00:00-00:00"
-icon = "<b>3.12. </b>"
-prev = "/03.authz.rs/11.fn_is_permitted_from_str"
-next = "/03.authz.rs/13.unit_testing"
+icon = "<b>3.11. </b>"
+prev = "/03.authz.rs/10.fn_is_permitted_from_str"
+next = "/03.authz.rs/12.unit_testing"
 title = "fn perms_from_buffer"
 weight = 150
 +++

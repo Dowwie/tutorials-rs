@@ -1,9 +1,9 @@
 +++
 chapter = true
 date = "2017-02-12T10:00:00-00:00"
-icon = "<b>3.10. </b>"
-prev = "/03.authz.rs/09.fn_init_parts"
-next = "/03.authz.rs/11.fn_is_permitted_from_str"
+icon = "<b>3.9. </b>"
+prev = "/03.authz.rs/08.fn_init_parts"
+next = "/03.authz.rs/10.fn_is_permitted_from_str"
 title = "fn part_from_str"
 weight = 130
 +++

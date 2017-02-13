@@ -3,7 +3,7 @@ chapter = true
 date = "2017-02-12T10:00:00-00:00"
 icon = "<b>3.6. </b>"
 prev = "/03.authz.rs/05.deserializable_permission"
-next = "/03.authz.rs/07.lifetimes"
+next = "/03.authz.rs/07.permission_constructor"
 title = "Permission Implementation"
 weight = 90
 +++

@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="http://www.daringordon.com/tutorials-rs/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Constructor Pattern</title>
+    <title>fn part_from_str</title>
     <link href="http://www.daringordon.com/tutorials-rs/css/nucleus.css" rel="stylesheet">
     <link href="http://www.daringordon.com/tutorials-rs/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://www.daringordon.com/tutorials-rs/css/hybrid.css" rel="stylesheet">
@@ -30,7 +30,7 @@
 <link href="http://www.daringordon.com/tutorials-rs/css/authz_tutorial.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/03.authz.rs/08.permission_constructor/">
+  <body class="" data-url="/03.authz.rs/09.fn_part_from_str/">
     <nav id="sidebar">
   <div id="header-wrapper">
     <div id="header">
@@ -187,56 +187,48 @@
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/07.lifetimes/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.lifetimes/">
-                <span>Lifetimes     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item active" data-nav-id="/03.authz.rs/08.permission_constructor/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.permission_constructor/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/07.permission_constructor/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.permission_constructor/">
                 <span>Constructor Pattern     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/09.fn_init_parts/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_init_parts/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/08.fn_init_parts/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.fn_init_parts/">
                 <span>fn init_parts     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/10.fn_part_from_str/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_part_from_str/">
+            <li class="dd-item active" data-nav-id="/03.authz.rs/09.fn_part_from_str/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_part_from_str/">
                 <span>fn part_from_str     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/11.fn_is_permitted_from_str/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.fn_is_permitted_from_str/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/10.fn_is_permitted_from_str/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_is_permitted_from_str/">
                 <span>fn is_permitted_from_str     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/12.perms_from_buffer/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.perms_from_buffer/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/11.perms_from_buffer/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.perms_from_buffer/">
                 <span>fn perms_from_buffer     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/13.unit_testing/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/13.unit_testing/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/12.unit_testing/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.unit_testing/">
                 <span>Unit Testing     </i></span>
               </a>
             </li>
@@ -285,7 +277,7 @@
                     
                   
                 
-                <span itemprop="title"> Constructor Pattern</span>
+                <span itemprop="title"> fn part_from_str</span>
               </div>
               
 
@@ -298,22 +290,32 @@
 
 
 
-<h2 id="center-the-constructor-pattern-center"><center>The Constructor Pattern</center></h2>
+<h2 id="center-fn-part-from-str-center"><center>fn part_from_str</center></h2>
 
 <hr/>
 
-<pre><code class="language-rust">pub fn new(wildcard_perm: &amp;str) -&gt; Permission {
-    let (domain, actions, targets) = Permission::init_parts(wildcard_perm);
-    let perm = Permission {
-        domain: domain,
-        actions: actions,
-        targets: targets,
-    };
-    perm
+<pre><code class="language-rust">fn part_from_str(s: Option&lt;&amp;str&gt;) -&gt; HashSet&lt;String&gt; {
+    let mut set = HashSet::new();
+    match s {
+        Some(&quot;&quot;) | None =&gt; {
+            set.insert(String::from(&quot;*&quot;));
+        }
+        Some(s) =&gt; {
+            let mut set = HashSet::new();
+            for rule in s.split(SUBPART_DELIMETER).map(str::trim) {
+                set.insert(String::from(rule));
+            }
+        }
+    }
+    set
 }
 </code></pre>
 
-<p><em>new</em> is an associated function that implements a constructor pattern.  The first assignment illustrates what is known as a &ldquo;destructuring let&rdquo;.  Here, the call to <em>init_parts</em> returns a 3-element <a href="https://doc.rust-lang.org/book/primitive-types.html#tuples">tuple</a> that is unpacked and each of its three elements is bound to a corresponding name:  domain, actions, and targets.  These three variables are then used as arguments for a new Permission instance, which is returned in the last line.  The keyword &ldquo;return&rdquo; is implied and unnecessary in Rust if the last line of a function isn&rsquo;t terminated with a semicolon.</p>
+<p><em>part_from_str</em> is used to break a string into pieces and return those pieces in a HashSet, using a default wildcard asterisk when necessary.</p>
+
+<p><em>part_from_str</em> splits up a permission, using a SUBPART_DELIMETER, and returns the split parts as values of a HashSet.  A HashSet type is used to eliminate possible duplicate values and to take advantage of set operations during comparisons.</p>
+
+<p>Argument <strong>s</strong> is an Option, so we match on Some value or None.</p>
 
 
       
@@ -323,8 +325,8 @@
     </div>
 
     <div id="navigation">
-        <a class="nav nav-prev" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.lifetimes"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_init_parts" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-prev" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.fn_init_parts"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_is_permitted_from_str" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>

@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="http://www.daringordon.com/tutorials-rs/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Unit Testing</title>
+    <title>fn is_permitted_from_str</title>
     <link href="http://www.daringordon.com/tutorials-rs/css/nucleus.css" rel="stylesheet">
     <link href="http://www.daringordon.com/tutorials-rs/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://www.daringordon.com/tutorials-rs/css/hybrid.css" rel="stylesheet">
@@ -30,7 +30,7 @@
 <link href="http://www.daringordon.com/tutorials-rs/css/authz_tutorial.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/03.authz.rs/13.unit_testing/">
+  <body class="" data-url="/03.authz.rs/10.fn_is_permitted_from_str/">
     <nav id="sidebar">
   <div id="header-wrapper">
     <div id="header">
@@ -187,56 +187,48 @@
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/07.lifetimes/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.lifetimes/">
-                <span>Lifetimes     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/03.authz.rs/08.permission_constructor/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.permission_constructor/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/07.permission_constructor/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.permission_constructor/">
                 <span>Constructor Pattern     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/09.fn_init_parts/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_init_parts/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/08.fn_init_parts/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.fn_init_parts/">
                 <span>fn init_parts     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/10.fn_part_from_str/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_part_from_str/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/09.fn_part_from_str/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_part_from_str/">
                 <span>fn part_from_str     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/11.fn_is_permitted_from_str/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.fn_is_permitted_from_str/">
+            <li class="dd-item active" data-nav-id="/03.authz.rs/10.fn_is_permitted_from_str/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_is_permitted_from_str/">
                 <span>fn is_permitted_from_str     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/12.perms_from_buffer/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.perms_from_buffer/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/11.perms_from_buffer/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.perms_from_buffer/">
                 <span>fn perms_from_buffer     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item active" data-nav-id="/03.authz.rs/13.unit_testing/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/13.unit_testing/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/12.unit_testing/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.unit_testing/">
                 <span>Unit Testing     </i></span>
               </a>
             </li>
@@ -285,7 +277,7 @@
                     
                   
                 
-                <span itemprop="title"> Unit Testing</span>
+                <span itemprop="title"> fn is_permitted_from_str</span>
               </div>
               
 
@@ -298,37 +290,40 @@
 
 
 
-<h2 id="center-unit-testing-center"><center>Unit Testing</center></h2>
+<h2 id="center-fn-is-permitted-from-str-center"><center>fn is_permitted_from_str</center></h2>
 
 <hr/>
 
-<pre><code class="language-rust">#[cfg(test)]
-mod test {
-    use serde_json;
-    use authz::{Permission, is_permitted_from_str, is_permitted_from_perm, perms_from_buffer};
-    use std::collections::HashSet;
+<pre><code class="language-rust">pub fn is_permitted_from_str&lt;'a, I&gt;(required_perm: &amp;str, assigned_perms: I) -&gt; i32
+    where I: IntoIterator&lt;Item = &amp;'a str&gt;
+{
+    let required_permission = Permission::new(&amp;required_perm);
 
-    #[test]
-    fn test_new_permission() {
-        ...
+    for assigned in assigned_perms {
+        let assigned_permission = Permission::new(assigned);
+        if assigned_permission.implies_from_perm(&amp;required_permission) {
+            return 1;
+        }
     }
+    return 0;
+}
 </code></pre>
 
-<p>In Rust, your unit tests exist within the module that they test, as a sub-module.  This approach is a departure from how unit testing is implemented in other programming languages &ndash; within modules separate from their test targets.  This practice is entirely safe and sound for the following two reasons:</p>
+<p><em>is_permitted_from_str</em> determines whether a required permission, expressed as a borrowed string, is satisfied by permissions assigned to a user, expressed as an iterator of borrowed strings.</p>
 
-<ol>
-<li><p>Unit tests are distinguished from the rest of a module  by decorating the section of unit testing code with a special <em>#[cfg(test)]</em> attribute and encapsulating all of the tests within a &ldquo;test&rdquo; sub-module: <em>mod test {..}</em>.  This attribute allows the compiler to ignore the section of code it decorates unless the compiler is explicitly instructed to run tests, such as by invoking &ldquo;cargo test&rdquo; from the command line.</p></li>
+<p>Notice how <em>is_permitted_from_str</em> is proceeded by <strong><em>&lt;&lsquo;a, I&gt;</em></strong>.  This states that <em>is_permitted_from_str</em> is a function that is generic over <strong>lifetime &lsquo;a</strong> and <strong>type I</strong>, where <strong>I</strong> implements IntoIterator with a <strong>str of lifetime &lsquo;a</strong> as its <em>associated type</em> Item.</p>
 
-<li><p>Unit tests test public <em>and</em> private objects.  Private objects are not accessible from outside the module that they exist but they are accessible, through imports, by descendant sub-modules (such as the test sub-module).</p></li>
-</ol>
+<h3 id="center-lifetimes-center"><center>Lifetimes</center></h3>
 
-<pre><code class="language-rust">    #[test]
-    fn test_new_permission() {
-        ...
-    }
-</code></pre>
+<p><strong><em>&lsquo;<name></em></strong> is the convention used to define a <a href="https://doc.rust-lang.org/book/lifetimes.html">lifetime parameter</a>, which in this case we have simply named <strong>a</strong>.  Rust forces programmers to take ownership of how long their objects will exist in memory when the compiler cannot infer object lifetime on its own.  We use the single apostrophe followed by the name of the lifetime when we scope our activities within a lifetime.</p>
 
-<p>The <em>#[test]</em> attribute is used to tell the compiler that the function it decorates is a test function and is to be run as a test unit.</p>
+<p>When a type reference is annotated with a lifetime parameter (in this case, &lsquo;a), we are declaring that the reference (borrow) is to remain valid (live) for <em>at least</em> the lifetime of &lsquo;a, if not longer.  In other words, we are declaring the minimum lifespan of a variable in memory.  The compiler&rsquo;s borrow checker keeps objects alive in memory for only as long as it needs to.</p>
+
+<p><strong>is_permitted_from_str</strong> requires the use of a lifetime parameter because it borrows values in the iterator passed to it by a calling function, specifically items that of type &amp;str.  Everything in Rust has a lifetime.  The reason that you don&rsquo;t see them everywhere is that they are often inferred by the compiler.  However, <em>borrows</em> required explicit annotation of lifetimes because the compiler cannot infer an appropriate lifetime for them. The compiler cannot infer what lifetime to assign these borrowed values.  In this example, we tell the compiler that our borrowed strings ought to live for the lifetime of the function.  A lifetime is declared at the block-level.  Here, our block is the function, <em>is_permitted_from_str</em>.</p>
+
+<h3 id="center-generic-over-type-i-center"><center>Generic Over Type I</center></h3>
+
+<p>The where clause constrains (bounds) what type is accepted for I:  a type that implements IntoIterator and whose items are strings.  This approach is used so that the function that calls <em>is_permitted_from_str</em> doesn&rsquo;t have to convert its dataset into a collection prior to passing it.</p>
 
 
       
@@ -338,8 +333,8 @@ mod test {
     </div>
 
     <div id="navigation">
-        <a class="nav nav-prev" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.perms_from_buffer"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="http://www.daringordon.com/tutorials-rs/" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-prev" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_part_from_str"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.perms_from_buffer" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>

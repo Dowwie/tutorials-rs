@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="http://www.daringordon.com/tutorials-rs/images/favicon.png" type="image/x-icon" />
 
     
-    <title>fn part_from_str</title>
+    <title>fn perms_from_buffer</title>
     <link href="http://www.daringordon.com/tutorials-rs/css/nucleus.css" rel="stylesheet">
     <link href="http://www.daringordon.com/tutorials-rs/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://www.daringordon.com/tutorials-rs/css/hybrid.css" rel="stylesheet">
@@ -30,7 +30,7 @@
 <link href="http://www.daringordon.com/tutorials-rs/css/authz_tutorial.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/03.authz.rs/10.fn_part_from_str/">
+  <body class="" data-url="/03.authz.rs/11.perms_from_buffer/">
     <nav id="sidebar">
   <div id="header-wrapper">
     <div id="header">
@@ -187,56 +187,48 @@
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/07.lifetimes/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.lifetimes/">
-                <span>Lifetimes     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/03.authz.rs/08.permission_constructor/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.permission_constructor/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/07.permission_constructor/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.permission_constructor/">
                 <span>Constructor Pattern     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/09.fn_init_parts/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_init_parts/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/08.fn_init_parts/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.fn_init_parts/">
                 <span>fn init_parts     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item active" data-nav-id="/03.authz.rs/10.fn_part_from_str/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_part_from_str/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/09.fn_part_from_str/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_part_from_str/">
                 <span>fn part_from_str     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/11.fn_is_permitted_from_str/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.fn_is_permitted_from_str/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/10.fn_is_permitted_from_str/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_is_permitted_from_str/">
                 <span>fn is_permitted_from_str     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/12.perms_from_buffer/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.perms_from_buffer/">
+            <li class="dd-item active" data-nav-id="/03.authz.rs/11.perms_from_buffer/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.perms_from_buffer/">
                 <span>fn perms_from_buffer     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/13.unit_testing/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/13.unit_testing/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/12.unit_testing/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.unit_testing/">
                 <span>Unit Testing     </i></span>
               </a>
             </li>
@@ -285,7 +277,7 @@
                     
                   
                 
-                <span itemprop="title"> fn part_from_str</span>
+                <span itemprop="title"> fn perms_from_buffer</span>
               </div>
               
 
@@ -298,32 +290,45 @@
 
 
 
-<h2 id="center-fn-part-from-str-center"><center>fn part_from_str</center></h2>
+<h2 id="center-fn-perms-from-buffer-center"><center>fn perms_from_buffer</center></h2>
 
 <hr/>
 
-<pre><code class="language-rust">fn part_from_str(s: Option&lt;&amp;str&gt;) -&gt; HashSet&lt;String&gt; {
-    let mut set = HashSet::new();
-    match s {
-        Some(&quot;&quot;) | None =&gt; {
-            set.insert(String::from(&quot;*&quot;));
-        }
-        Some(s) =&gt; {
-            let mut set = HashSet::new();
-            for rule in s.split(SUBPART_DELIMETER).map(str::trim) {
-                set.insert(String::from(rule));
-            }
-        }
-    }
-    set
-}
+<pre><code class="language-rust">pub fn perms_from_buffer(serialized_perms: &amp;[u8]) -&gt; Result&lt;Vec&lt;Permission&gt;, Box&lt;Error&gt;&gt; {
+    let result = try!(serde_json::from_slice(serialized_perms));
+    Ok(result)
+
 </code></pre>
 
-<p><em>part_from_str</em> is used to break a string into pieces and return those pieces in a HashSet, using a default wildcard asterisk when necessary.</p>
+<p><em>perms_from_buffer</em> de-serializes JSON to a Vector of Permissions. It borrows serialized_perms (a slice of bytes) and returns a Result that is either a <a href="https://doc.rust-lang.org/book/vectors.html">Vector</a> of Permissions or a Boxed Error.</p>
 
-<p><em>part_from_str</em> splits up a permission, using a SUBPART_DELIMETER, and returns the split parts as values of a HashSet.  A HashSet type is used to eliminate possible duplicate values and to take advantage of set operations during comparisons.</p>
+<h2 id="byte-slices">Byte Slices</h2>
 
-<p>Argument <strong>s</strong> is an Option, so we match on Some value or None.</p>
+<p>Notice how this function borrows <em>serialized_perms</em>.  <em>serialized_perms</em> is a slice of bytes whose type is expressed in Rust as <strong>&amp;[u8]</strong>. <em>serialized_perms</em> is in the form of a byte slice, rather than a string, because the JSON is stored in a particular datastore as bytes and consequently received from a datastore as bytes. No prior string conversion is necessary prior to handing the JSON over to the <em>serde_json</em> library for de-serialization because <em>serde_json</em> offers a <em>from_slice</em> function that can read byte slices.</p>
+
+<h2 id="error-handling">Error Handling</h2>
+
+<h3 id="the-try-macro">The try! macro</h3>
+
+<pre><code class="language-rust">let result = try!(serde_json::from_slice(serialized_perms));
+</code></pre>
+
+<p><em>try!</em> is a helper <a href="https://doc.rust-lang.org/beta/book/macros.html">macro</a> that reduces boilerplate code involved with calling a procedure and handling any errors that may arise from the call.  In the event that the code executed within a <em>try!</em> block raises an error, <em>try!</em> will either propagate <em>that</em> error or an error of your liking up the call stack without resuming execution of any other code within <em>perms_from_buffer</em>.  Because of the early return, <em>try!</em> can only be used in functions that return a Result type.  We address this requirement with our return type:  <em>Result<Vec<Permission>, Box<Error>&gt;</em></p>
+
+<p>In the event that <em>let result = serde_json::from_slice(serialized_perms)</em> doesn&rsquo;t raise an error, the <em>pattern</em>, named &lsquo;result&rsquo;, is bound to the value returned by the function call: a Vector of Permissions.</p>
+
+<h3 id="boxes">Boxes</h3>
+
+<p>When an error arises, <em>serde_json::from_slice</em> returns a Result containing a <em>boxed</em> error.</p>
+
+<p>Suppose that we declared <em>x: Box<Error></em>. <strong>x</strong> is referred to as a &ldquo;boxed Error&rdquo;. Specifically, it is an Error <a href="https://doc.rust-lang.org/book/error-handling.html#the-error-trait">trait</a> object allocated to space on the heap.  In Rust, a trait object cannot be <em>passed</em> around by its owner in its native form because a trait object is <a href="https://doc.rust-lang.org/nightly/book/unsized-types.html">unsized</a>.  Instead, we often box a trait object and then move it in its box.</p>
+
+<h3 id="results">Results</h3>
+
+<pre><code class="language-rust">Result&lt;Vec&lt;Permission&gt;, Box&lt;Error&gt;&gt;
+</code></pre>
+
+<p><em>Result</em> is an <a href="https://doc.rust-lang.org/std/result/index.html">enumerated type</a> that can take one of two forms:  a success (Ok) or failure (Err).  So, our call to <em>serde_json::from_slice</em> returns a Result type that will either be a Result::Ok(x), where x is a Vector of Permissions, or a Result::Err(e) where e is a boxed error.</p>
 
 
       
@@ -333,8 +338,8 @@
     </div>
 
     <div id="navigation">
-        <a class="nav nav-prev" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_init_parts"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.fn_is_permitted_from_str" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-prev" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_is_permitted_from_str"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.unit_testing" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>

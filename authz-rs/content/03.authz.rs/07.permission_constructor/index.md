@@ -1,9 +1,9 @@
 +++
 chapter = true
 date = "2017-02-12T10:00:00-00:00"
-icon = "<b>3.8. </b>"
-prev = "/03.authz.rs/07.lifetimes"
-next = "/03.authz.rs/09.fn_init_parts"
+icon = "<b>3.7. </b>"
+prev = "/03.authz.rs/06.permission_impl"
+next = "/03.authz.rs/08.fn_init_parts"
 title = "Constructor Pattern"
 weight = 110
 +++

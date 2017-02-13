@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="http://www.daringordon.com/tutorials-rs/images/favicon.png" type="image/x-icon" />
 
     
-    <title>fn is_permitted_from_str</title>
+    <title>Constructor Pattern</title>
     <link href="http://www.daringordon.com/tutorials-rs/css/nucleus.css" rel="stylesheet">
     <link href="http://www.daringordon.com/tutorials-rs/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://www.daringordon.com/tutorials-rs/css/hybrid.css" rel="stylesheet">
@@ -30,7 +30,7 @@
 <link href="http://www.daringordon.com/tutorials-rs/css/authz_tutorial.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/03.authz.rs/11.fn_is_permitted_from_str/">
+  <body class="" data-url="/03.authz.rs/07.permission_constructor/">
     <nav id="sidebar">
   <div id="header-wrapper">
     <div id="header">
@@ -187,56 +187,48 @@
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/07.lifetimes/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.lifetimes/">
-                <span>Lifetimes     </i></span>
-              </a>
-            </li>
-          
-          
-          
-            <li class="dd-item " data-nav-id="/03.authz.rs/08.permission_constructor/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.permission_constructor/">
+            <li class="dd-item active" data-nav-id="/03.authz.rs/07.permission_constructor/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/07.permission_constructor/">
                 <span>Constructor Pattern     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/09.fn_init_parts/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_init_parts/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/08.fn_init_parts/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.fn_init_parts/">
                 <span>fn init_parts     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/10.fn_part_from_str/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_part_from_str/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/09.fn_part_from_str/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_part_from_str/">
                 <span>fn part_from_str     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item active" data-nav-id="/03.authz.rs/11.fn_is_permitted_from_str/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.fn_is_permitted_from_str/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/10.fn_is_permitted_from_str/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_is_permitted_from_str/">
                 <span>fn is_permitted_from_str     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/12.perms_from_buffer/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.perms_from_buffer/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/11.perms_from_buffer/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/11.perms_from_buffer/">
                 <span>fn perms_from_buffer     </i></span>
               </a>
             </li>
           
           
           
-            <li class="dd-item " data-nav-id="/03.authz.rs/13.unit_testing/">
-              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/13.unit_testing/">
+            <li class="dd-item " data-nav-id="/03.authz.rs/12.unit_testing/">
+              <a href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.unit_testing/">
                 <span>Unit Testing     </i></span>
               </a>
             </li>
@@ -285,7 +277,7 @@
                     
                   
                 
-                <span itemprop="title"> fn is_permitted_from_str</span>
+                <span itemprop="title"> Constructor Pattern</span>
               </div>
               
 
@@ -298,28 +290,22 @@
 
 
 
-<h2 id="center-fn-is-permitted-from-str-center"><center>fn is_permitted_from_str</center></h2>
+<h2 id="center-the-constructor-pattern-center"><center>The Constructor Pattern</center></h2>
 
 <hr/>
 
-<pre><code class="language-rust">pub fn is_permitted_from_str&lt;'a, I&gt;(required_perm: &amp;str, assigned_perms: I) -&gt; i32
-    where I: IntoIterator&lt;Item = &amp;'a str&gt;
-{
-    let required_permission = Permission::new(&amp;required_perm);
-
-    for assigned in assigned_perms {
-        let assigned_permission = Permission::new(assigned);
-        if assigned_permission.implies_from_perm(&amp;required_permission) {
-            return 1;
-        }
-    }
-    return 0;
+<pre><code class="language-rust">pub fn new(wildcard_perm: &amp;str) -&gt; Permission {
+    let (domain, actions, targets) = Permission::init_parts(wildcard_perm);
+    let perm = Permission {
+        domain: domain,
+        actions: actions,
+        targets: targets,
+    };
+    perm
 }
 </code></pre>
 
-<p><em>is_permitted_from_str</em> determines whether a required permission, expressed as a borrowed string, is satisfied by permissions assigned to a user, expressed as an iterator of borrowed strings.</p>
-
-<p><em>is_permitted_from_str</em> is a function that is generic over one type, I.  The where clause constrains (bounds) what type is accepted for I:  a type that implements IntoIterator and whose items are strings.  This approach is used so that the function that calls <em>is_permitted_from_str</em> doesn&rsquo;t have to convert its dataset into a collection prior to passing it.</p>
+<p><em>new</em> is an associated function that implements a constructor pattern.  The first assignment illustrates what is known as a &ldquo;destructuring let&rdquo;.  Here, the call to <em>init_parts</em> returns a 3-element <a href="https://doc.rust-lang.org/book/primitive-types.html#tuples">tuple</a> that is unpacked and each of its three elements is bound to a corresponding name:  domain, actions, and targets.  These three variables are then used as arguments for a new Permission instance, which is returned in the last line.  The keyword &ldquo;return&rdquo; is implied and unnecessary in Rust if the last line of a function isn&rsquo;t terminated with a semicolon.</p>
 
 
       
@@ -329,8 +315,8 @@
     </div>
 
     <div id="navigation">
-        <a class="nav nav-prev" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_part_from_str"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/12.perms_from_buffer" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-prev" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/06.permission_impl"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="http://www.daringordon.com/tutorials-rs/03.authz.rs/08.fn_init_parts" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>

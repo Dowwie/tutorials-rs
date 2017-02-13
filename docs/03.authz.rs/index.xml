@@ -539,36 +539,11 @@ we call &lt;em&gt;implies_from_perm&lt;/em&gt; from instance &lt;em&gt;permissio
     </item>
     
     <item>
-      <title>Lifetimes</title>
-      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/07.lifetimes/</link>
-      <pubDate>Sun, 12 Feb 2017 10:00:00 +0000</pubDate>
-      
-      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/07.lifetimes/</guid>
-      <description>
-
-&lt;h2 id=&#34;center-lifetimes-center&#34;&gt;&lt;center&gt;Lifetimes&lt;/center&gt;&lt;/h2&gt;
-
-&lt;hr/&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;impl&amp;lt;&#39;a&amp;gt; Permission
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;We begin the implementation for the Permission struct with the &lt;strong&gt;&lt;em&gt;impl&lt;/em&gt;&lt;/strong&gt; keyword.&lt;/p&gt;
-
-&lt;p&gt;Notice how &lt;em&gt;impl&lt;/em&gt; is proceeded by &lt;strong&gt;&lt;em&gt;&amp;lt;&amp;lsquo;a&amp;gt;&lt;/em&gt;&lt;/strong&gt;.  This is the convention used to define a &lt;a href=&#34;https://doc.rust-lang.org/book/lifetimes.html&#34;&gt;lifetime parameter&lt;/a&gt;, which we have named &lt;em&gt;a&lt;/em&gt;.  Rust forces programmers to take ownership of how long their objects will exist in memory when the compiler cannot infer object lifetime on its own.  We use the single apostrophe followed by the name of the lifetime when we scope our activities within a lifetime.&lt;/p&gt;
-
-&lt;p&gt;When a type reference is annotated with a lifetime parameter (in this case, &amp;lsquo;a), we are declaring that the reference (borrow) is to remain valid (live) for &lt;em&gt;at least&lt;/em&gt; the lifetime of &amp;lsquo;a, if not longer.  In other words, we are declaring the minimum lifespan of a variable in memory.  The compiler&amp;rsquo;s borrow checker keeps objects alive in memory for only as long as it needs to.  In the case of this project, &lt;em&gt;impl&amp;lt;&amp;lsquo;a&amp;gt; Permission&lt;/em&gt; is &lt;em&gt;required&lt;/em&gt; by the compiler because borrows within the implementation use lifetime &amp;lsquo;a and since they exist within the scope of the implemntation, the implementation must also live for at least as long as it&amp;rsquo;s constituents&amp;rsquo; lifetime &amp;lsquo;a.&lt;/p&gt;
-
-&lt;p&gt;Everything in Rust has a lifetime.  The reason that you don&amp;rsquo;t see them everywhere is that they are often inferred by the compiler.  However, &lt;em&gt;borrows&lt;/em&gt; required explicit annotation of lifetimes because the compiler cannot infer an appropriate lifetime for them.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Constructor Pattern</title>
-      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/08.permission_constructor/</link>
+      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/07.permission_constructor/</link>
       <pubDate>Sun, 12 Feb 2017 10:00:00 +0000</pubDate>
       
-      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/08.permission_constructor/</guid>
+      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/07.permission_constructor/</guid>
       <description>
 
 &lt;h2 id=&#34;center-the-constructor-pattern-center&#34;&gt;&lt;center&gt;The Constructor Pattern&lt;/center&gt;&lt;/h2&gt;
@@ -592,10 +567,10 @@ we call &lt;em&gt;implies_from_perm&lt;/em&gt; from instance &lt;em&gt;permissio
     
     <item>
       <title>fn init_parts</title>
-      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_init_parts/</link>
+      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/08.fn_init_parts/</link>
       <pubDate>Sun, 12 Feb 2017 10:00:00 +0000</pubDate>
       
-      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_init_parts/</guid>
+      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/08.fn_init_parts/</guid>
       <description>
 
 &lt;h2 id=&#34;center-fn-init-parts-center&#34;&gt;&lt;center&gt;fn init_parts&lt;/center&gt;&lt;/h2&gt;
@@ -662,10 +637,10 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
     
     <item>
       <title>fn part_from_str</title>
-      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_part_from_str/</link>
+      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_part_from_str/</link>
       <pubDate>Sun, 12 Feb 2017 10:00:00 +0000</pubDate>
       
-      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_part_from_str/</guid>
+      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/09.fn_part_from_str/</guid>
       <description>
 
 &lt;h2 id=&#34;center-fn-part-from-str-center&#34;&gt;&lt;center&gt;fn part_from_str&lt;/center&gt;&lt;/h2&gt;
@@ -699,10 +674,10 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
     
     <item>
       <title>fn is_permitted_from_str</title>
-      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/11.fn_is_permitted_from_str/</link>
+      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_is_permitted_from_str/</link>
       <pubDate>Sun, 12 Feb 2017 10:00:00 +0000</pubDate>
       
-      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/11.fn_is_permitted_from_str/</guid>
+      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/10.fn_is_permitted_from_str/</guid>
       <description>
 
 &lt;h2 id=&#34;center-fn-is-permitted-from-str-center&#34;&gt;&lt;center&gt;fn is_permitted_from_str&lt;/center&gt;&lt;/h2&gt;
@@ -726,16 +701,28 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
 
 &lt;p&gt;&lt;em&gt;is_permitted_from_str&lt;/em&gt; determines whether a required permission, expressed as a borrowed string, is satisfied by permissions assigned to a user, expressed as an iterator of borrowed strings.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;is_permitted_from_str&lt;/em&gt; is a function that is generic over one type, I.  The where clause constrains (bounds) what type is accepted for I:  a type that implements IntoIterator and whose items are strings.  This approach is used so that the function that calls &lt;em&gt;is_permitted_from_str&lt;/em&gt; doesn&amp;rsquo;t have to convert its dataset into a collection prior to passing it.&lt;/p&gt;
+&lt;p&gt;Notice how &lt;em&gt;is_permitted_from_str&lt;/em&gt; is proceeded by &lt;strong&gt;&lt;em&gt;&amp;lt;&amp;lsquo;a, I&amp;gt;&lt;/em&gt;&lt;/strong&gt;.  This states that &lt;em&gt;is_permitted_from_str&lt;/em&gt; is a function that is generic over &lt;strong&gt;lifetime &amp;lsquo;a&lt;/strong&gt; and &lt;strong&gt;type I&lt;/strong&gt;, where &lt;strong&gt;I&lt;/strong&gt; implements IntoIterator with a &lt;strong&gt;str of lifetime &amp;lsquo;a&lt;/strong&gt; as its &lt;em&gt;associated type&lt;/em&gt; Item.&lt;/p&gt;
+
+&lt;h3 id=&#34;center-lifetimes-center&#34;&gt;&lt;center&gt;Lifetimes&lt;/center&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;&amp;lsquo;&lt;name&gt;&lt;/em&gt;&lt;/strong&gt; is the convention used to define a &lt;a href=&#34;https://doc.rust-lang.org/book/lifetimes.html&#34;&gt;lifetime parameter&lt;/a&gt;, which in this case we have simply named &lt;strong&gt;a&lt;/strong&gt;.  Rust forces programmers to take ownership of how long their objects will exist in memory when the compiler cannot infer object lifetime on its own.  We use the single apostrophe followed by the name of the lifetime when we scope our activities within a lifetime.&lt;/p&gt;
+
+&lt;p&gt;When a type reference is annotated with a lifetime parameter (in this case, &amp;lsquo;a), we are declaring that the reference (borrow) is to remain valid (live) for &lt;em&gt;at least&lt;/em&gt; the lifetime of &amp;lsquo;a, if not longer.  In other words, we are declaring the minimum lifespan of a variable in memory.  The compiler&amp;rsquo;s borrow checker keeps objects alive in memory for only as long as it needs to.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;is_permitted_from_str&lt;/strong&gt; requires the use of a lifetime parameter because it borrows values in the iterator passed to it by a calling function, specifically items that of type &amp;amp;str.  Everything in Rust has a lifetime.  The reason that you don&amp;rsquo;t see them everywhere is that they are often inferred by the compiler.  However, &lt;em&gt;borrows&lt;/em&gt; required explicit annotation of lifetimes because the compiler cannot infer an appropriate lifetime for them. The compiler cannot infer what lifetime to assign these borrowed values.  In this example, we tell the compiler that our borrowed strings ought to live for the lifetime of the function.  A lifetime is declared at the block-level.  Here, our block is the function, &lt;em&gt;is_permitted_from_str&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;center-generic-over-type-i-center&#34;&gt;&lt;center&gt;Generic Over Type I&lt;/center&gt;&lt;/h3&gt;
+
+&lt;p&gt;The where clause constrains (bounds) what type is accepted for I:  a type that implements IntoIterator and whose items are strings.  This approach is used so that the function that calls &lt;em&gt;is_permitted_from_str&lt;/em&gt; doesn&amp;rsquo;t have to convert its dataset into a collection prior to passing it.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>fn perms_from_buffer</title>
-      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/12.perms_from_buffer/</link>
+      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/11.perms_from_buffer/</link>
       <pubDate>Sun, 12 Feb 2017 10:00:00 +0000</pubDate>
       
-      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/12.perms_from_buffer/</guid>
+      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/11.perms_from_buffer/</guid>
       <description>
 
 &lt;h2 id=&#34;center-fn-perms-from-buffer-center&#34;&gt;&lt;center&gt;fn perms_from_buffer&lt;/center&gt;&lt;/h2&gt;
@@ -782,10 +769,10 @@ required by the Permission struct, using default values when necessary.&lt;/p&gt
     
     <item>
       <title>Unit Testing</title>
-      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/13.unit_testing/</link>
+      <link>http://www.daringordon.com/tutorials-rs/03.authz.rs/12.unit_testing/</link>
       <pubDate>Sun, 12 Feb 2017 10:00:00 +0000</pubDate>
       
-      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/13.unit_testing/</guid>
+      <guid>http://www.daringordon.com/tutorials-rs/03.authz.rs/12.unit_testing/</guid>
       <description>
 
 &lt;h2 id=&#34;center-unit-testing-center&#34;&gt;&lt;center&gt;Unit Testing&lt;/center&gt;&lt;/h2&gt;
