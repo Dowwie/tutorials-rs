@@ -308,7 +308,7 @@ pub mod authz;
 pub use authz::{is_permitted_from_str, is_permitted_from_perm, perms_from_buffer, Permission};
 </code></pre>
 
-<p>The <code>authz</code> crate compiles to a library.</p>
+<p>The <em>authz</em> crate compiles to a library.</p>
 
 <p><strong>/src/lib.rs</strong> is considered the <strong>crate root</strong> of the project.</p>
 
@@ -325,15 +325,15 @@ pub use authz::{is_permitted_from_str, is_permitted_from_perm, perms_from_buffer
 extern crate serde_derive;
 </code></pre>
 
-<p>These two lines state to import the serde_derive crate <em>and</em> its macros. <code>#[macro_use]</code> decorates <code>extern crate serde_derive</code> to indicate that macros are to be included with the import of the serde_derive crate</p>
+<p>These two lines state to import the serde_derive crate <em>and</em> its macros. <em>#[macro_use]</em> decorates <em>extern crate serde_derive</em> to indicate that macros are to be included with the import of the serde_derive crate</p>
 
 <p><code>rust
 pub mod authz</code>
-instructs Rust to look for <code>/src/authz.rs</code> or <code>/src/authz/mod.rs</code>, and make it available for public use.  If you were to mistakenly include BOTH of these module files for the same module name, the Rust compiler will raise an exception during compilation, stating that it found both files and hinting that you remove one in order to eliminate ambiguity.</p>
+instructs Rust to look for <em>/src/authz.rs</em> or <em>/src/authz/mod.rs</em>, and make it available for public use.  If you were to mistakenly include BOTH of these module files for the same module name, the Rust compiler will raise an exception during compilation, stating that it found both files and hinting that you remove one in order to eliminate ambiguity.</p>
 
 <p><code>rust
 pub use authz::{is_permitted_from_str, is_permitted_from_perm, ...}</code>
-exposes functions from the authz module for public use.  Exposing a function from lib.rs reduces the knowledge required by a consumer to use that function.  If this <code>use</code> statement were omitted, a developer would need to reference functions using a convention such as <code>authz::authz::is_permitted_from_str</code>.</p>
+exposes functions from the authz module for public use.  Exposing a function from lib.rs reduces the knowledge required by a consumer to use that function.  If the <strong>use</strong> statement were omitted, a developer would need to reference functions using a convention such as <em>authz::authz::is_permitted_from_str</em>.</p>
 
 
       
