@@ -362,8 +362,8 @@ ul, menu, dir {
   background-size: 70%;
   background-repeat: no-repeat;
   background-position: top;
-  min-height: 250px;
-  max-height: 300px;
+  min-height: 300px;
+  max-height: 400px;
   justify-content: center;
   -webkit-justify-content: center;
   display: flex;
