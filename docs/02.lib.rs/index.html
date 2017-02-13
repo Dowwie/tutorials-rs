@@ -327,13 +327,15 @@ extern crate serde_derive;
 
 <p>These two lines state to import the serde_derive crate <em>and</em> its macros. <em>#[macro_use]</em> decorates <em>extern crate serde_derive</em> to indicate that macros are to be included with the import of the serde_derive crate</p>
 
-<p><code>rust
-pub mod authz</code>
-instructs Rust to look for <em>/src/authz.rs</em> or <em>/src/authz/mod.rs</em>, and make it available for public use.  If you were to mistakenly include BOTH of these module files for the same module name, the Rust compiler will raise an exception during compilation, stating that it found both files and hinting that you remove one in order to eliminate ambiguity.</p>
+<pre><code class="language-rust">pub mod authz
+</code></pre>
 
-<p><code>rust
-pub use authz::{is_permitted_from_str, is_permitted_from_perm, ...}</code>
-exposes functions from the authz module for public use.  Exposing a function from lib.rs reduces the knowledge required by a consumer to use that function.  If the <strong>use</strong> statement were omitted, a developer would need to reference functions using a convention such as <em>authz::authz::is_permitted_from_str</em>.</p>
+<p>instructs Rust to look for <em>/src/authz.rs</em> or <em>/src/authz/mod.rs</em>, and make it available for public use.  If you were to mistakenly include BOTH of these module files for the same module name, the Rust compiler will raise an exception during compilation, stating that it found both files and hinting that you remove one in order to eliminate ambiguity.</p>
+
+<pre><code class="language-rust">pub use authz::{is_permitted_from_str, is_permitted_from_perm, ...}
+</code></pre>
+
+<p>exposes functions from the authz module for public use.  Exposing a function from lib.rs reduces the knowledge required by a consumer to use that function.  If the <strong>use</strong> statement were omitted, a developer would need to reference functions using a convention such as <em>authz::authz::is_permitted_from_str</em>.</p>
 
 
       

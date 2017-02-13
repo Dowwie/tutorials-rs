@@ -98,13 +98,15 @@ extern crate serde_derive;
 
 &lt;p&gt;These two lines state to import the serde_derive crate &lt;em&gt;and&lt;/em&gt; its macros. &lt;em&gt;#[macro_use]&lt;/em&gt; decorates &lt;em&gt;extern crate serde_derive&lt;/em&gt; to indicate that macros are to be included with the import of the serde_derive crate&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;rust
-pub mod authz&lt;/code&gt;
-instructs Rust to look for &lt;em&gt;/src/authz.rs&lt;/em&gt; or &lt;em&gt;/src/authz/mod.rs&lt;/em&gt;, and make it available for public use.  If you were to mistakenly include BOTH of these module files for the same module name, the Rust compiler will raise an exception during compilation, stating that it found both files and hinting that you remove one in order to eliminate ambiguity.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;pub mod authz
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;code&gt;rust
-pub use authz::{is_permitted_from_str, is_permitted_from_perm, ...}&lt;/code&gt;
-exposes functions from the authz module for public use.  Exposing a function from lib.rs reduces the knowledge required by a consumer to use that function.  If the &lt;strong&gt;use&lt;/strong&gt; statement were omitted, a developer would need to reference functions using a convention such as &lt;em&gt;authz::authz::is_permitted_from_str&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;instructs Rust to look for &lt;em&gt;/src/authz.rs&lt;/em&gt; or &lt;em&gt;/src/authz/mod.rs&lt;/em&gt;, and make it available for public use.  If you were to mistakenly include BOTH of these module files for the same module name, the Rust compiler will raise an exception during compilation, stating that it found both files and hinting that you remove one in order to eliminate ambiguity.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-rust&#34;&gt;pub use authz::{is_permitted_from_str, is_permitted_from_perm, ...}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;exposes functions from the authz module for public use.  Exposing a function from lib.rs reduces the knowledge required by a consumer to use that function.  If the &lt;strong&gt;use&lt;/strong&gt; statement were omitted, a developer would need to reference functions using a convention such as &lt;em&gt;authz::authz::is_permitted_from_str&lt;/em&gt;.&lt;/p&gt;
 </description>
     </item>
     
