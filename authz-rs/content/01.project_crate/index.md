@@ -13,7 +13,7 @@ weight = 10
 **authz** is a *library* that performs permission-based authorization.  It is
 a port from [Yosai](https://www.github.com/YosaiProject/yosai).
 
-**rust-authz** is the name of the github project but the name of the crate is simply **authz**.
+**rust-authz** is the name of the [github project](https://www.github.com/Dowwie/rust-authz) but the name of the [crate](https://crates.io/crates/authz) is simply **authz**.
 
 ### Project Layout
 

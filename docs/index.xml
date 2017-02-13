@@ -21,7 +21,7 @@
 &lt;p&gt;&lt;strong&gt;authz&lt;/strong&gt; is a &lt;em&gt;library&lt;/em&gt; that performs permission-based authorization.  It is
 a port from &lt;a href=&#34;https://www.github.com/YosaiProject/yosai&#34;&gt;Yosai&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;rust-authz&lt;/strong&gt; is the name of the github project but the name of the crate is simply &lt;strong&gt;authz&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;rust-authz&lt;/strong&gt; is the name of the &lt;a href=&#34;https://www.github.com/Dowwie/rust-authz&#34;&gt;github project&lt;/a&gt; but the name of the &lt;a href=&#34;https://crates.io/crates/authz&#34;&gt;crate&lt;/a&gt; is simply &lt;strong&gt;authz&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;h3 id=&#34;project-layout&#34;&gt;Project Layout&lt;/h3&gt;
 
