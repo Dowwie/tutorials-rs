@@ -10,4 +10,6 @@ function showBox(id) {
 
 	var picElem = document.querySelector('#pic' + id);
 	picElem.classList.toggle('active');
+
+	window.scrollBy(0, 200); 	
 }
